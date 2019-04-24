@@ -1,18 +1,19 @@
 package transaction.impl;
 
+import dao.DbManager;
 import exception.DbException;
 import transaction.TransactionManager;
 import transaction.TransactionOperation;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManagerImpl implements TransactionManager {
-    private final DataSource dataSource;
+    private final DbManager dbManager;
 
-    public TransactionManagerImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public TransactionManagerImpl() {
+
+        this.dbManager = DbManager.getInstance();
     }
 
     @Override
@@ -20,16 +21,16 @@ public class TransactionManagerImpl implements TransactionManager {
         T result;
         Connection connection = null;
         try {
-            connection = dataSource.getConnection();
+            connection = dbManager.getConnection();
             connection.setAutoCommit(false);
-            result = operation.execute(dataSource.getConnection());
+            result = operation.execute(dbManager.getConnection());
             connection.commit();
         } catch (SQLException TransactionException) {
             if (connection != null) {
                 try {
                     connection.rollback();
                 } catch (SQLException rollBackException) {
-                  //NOP
+                    //NOP
                 }
             }
             throw new DbException(TransactionException);
@@ -38,7 +39,7 @@ public class TransactionManagerImpl implements TransactionManager {
                 try {
                     connection.close();
                 } catch (SQLException closeException) {
-                  //NOP
+                    //NOP
                 }
             }
         }

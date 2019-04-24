@@ -1,5 +1,5 @@
 <Context>
-    <Resource name="departments"
+    <Resource name="jdbc/departments"
               auth="Container"
               type="javax.sql.DataSource"
               maxActive="100"
@@ -8,5 +8,5 @@
               username="root"
               password="1"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/departments"/>
+              url="jdbc:mysql://localhost:3306/departments?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"/>
 </Context>
