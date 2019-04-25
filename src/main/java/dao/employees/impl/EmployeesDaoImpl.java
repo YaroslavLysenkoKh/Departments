@@ -13,7 +13,7 @@ public class EmployeesDaoImpl implements EmployeesDao {
     private static final String SELECT_ALL_EMPLOYEES_BY_DEPARTMENT_ID = "SELECT * FROM employees WHERE id_department = ?";
     private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employees WHERE id = ?";
     private static final String SELECT_EMPLOYEE_BY_EMAIL = "SELECT * FROM employees WHERE email = ?";
-    private static final String DELETE_EMPLOYEE_BY_ID = "DELETE FROM employess WHERE id = ?";
+    private static final String DELETE_EMPLOYEE_BY_ID = "DELETE FROM employees WHERE id = ?";
     private static final String INSERT_EMPLOYEE = "INSERT INTO employees VALUES (DEFAULT,?,?,?,?,?)";
     private static final String UPDATE_EMPLOYEE = "UPDATE employees SET email=?,password=?,salary=?,birth_date=?,id_department=? WHERE id=?";
 

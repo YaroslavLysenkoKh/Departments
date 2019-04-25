@@ -23,11 +23,12 @@
         <tr>
             <td><c:out value="${department.name}"></c:out></td>
             <td>
-                <a href="Controller?command=departmentEmployees&action=departmentEmployee&departmentId${department.id}">Employee
+                <a href="Controller?command=departmentEmployees&action=departmentEmployee&departmentId=<c:out value="${department.id}"/>">Employee
                     List</a>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/Controller?command=getToEditDepartment&departmentId=<c:out value="${department.id}"/>">Edit</a>
+                <a href="${pageContext.request.contextPath}/Controller?command=getToEditDepartment&departmentId=<c:out
+                    value="${department.id}"/>">Edit</a>
             </td>
             <td>
                 <form method="post" action="${pageContext.request.contextPath}/Controller">

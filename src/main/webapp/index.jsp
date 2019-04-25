@@ -11,6 +11,5 @@
 <a href="Controller?command=departments">Departments</a> |
 <a href="Controller?command=departmentEmployees&action=list">Employees</a>
 
-<%--<a href="Controller?command=toEdit">Add Employee</a>--%>
 </body>
 </html>

@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>Employee Salary:</td>
-            <td><input type="text" name="price" value="${employee.salary}" required></td>
+            <td><input type="text" name="salary" value="${employee.salary}" required></td>
         </tr>
         <tr>
             <td>Employee Password:</td>

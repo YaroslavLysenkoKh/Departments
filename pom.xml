@@ -26,7 +26,6 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -47,6 +46,13 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- oval -->
+        <dependency>
+            <groupId>net.sf.oval</groupId>
+            <artifactId>oval</artifactId>
+            <version>1.90</version>
+        </dependency>
+
 
     </dependencies>
 
