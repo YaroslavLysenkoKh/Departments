@@ -73,6 +73,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public boolean checkEmployeeExistenceByDepartmentId(Long id) {
+        List<Employee> employees = getAllByDepartmentId(id);
+        if (employees != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Employee getEmployeeByEmail(String email) {
         return transactionManager.doInTransaction(connection -> employeesDao.getEmployeeByEmail(email, connection));
     }

@@ -20,7 +20,7 @@
             <td>${employee.salary}</td>
             <td>${employee.birthDate}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/Controller?command=getToEditEmployee&employeeId=<c:out value="${employee.id}"/>">Edit</a>
+                <a href="${pageContext.request.contextPath}/Controller?command=getToEditEmployee&action=update&employeeId=<c:out value="${employee.id}"/>">Edit</a>
             </td>
             <td>
                 <form method="post" action="${pageContext.request.contextPath}/Controller">
@@ -33,5 +33,8 @@
     </c:forEach>
     </tbody>
 </table>
+<p>
+    <a href="${pageContext.request.contextPath}/WEB-INF/jsp/employees/EditEmployee.jsp">Add Employee</a>
+</p>
 </body>
 </html>

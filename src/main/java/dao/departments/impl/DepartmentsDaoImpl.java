@@ -12,6 +12,7 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
     private static final String INSERT_DEPARTMENT = "INSERT INTO departments VALUES (DEFAULT, ?)";
     private static final String UPDATE_DEPARTMENT = "UPDATE departments SET name=? WHERE id=?";
     private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments WHERE id=?";
+    private static final String SELECT_DEPARTMENT_BY_NAME = "SELECT * FROM departments WHERE name=?";
     private static final String DELETE_DEPARTMENT_BY_ID = "DELETE FROM departments WHERE id=?";
 
     @Override
@@ -65,5 +66,15 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
         department.setId(resultSet.getLong(1));
         department.setName(resultSet.getString(2));
         return department;
+    }
+
+    @Override
+    public Department getByName(String name, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEPARTMENT_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return extractDepartment(resultSet);
+        }
     }
 }

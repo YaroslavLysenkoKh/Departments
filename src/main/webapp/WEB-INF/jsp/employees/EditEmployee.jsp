@@ -1,11 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<jsp:useBean id="now" class="java.util.Date"/>
-<fmt:formatDate var="date" value="${now}" pattern="yyyy-MM-dd"/>
+
 <html>
 <head>
-    <title>Title</title>
+
 </head>
 <body>
 
@@ -14,7 +13,15 @@
         <tr>
             <td>Employee Id:</td>
             <td><input type="text" readonly="readonly" name="employeeId"
-                       value="<c:out value="${employee.id}" />"/></td>
+            <c:choose>
+            <c:when test="${empty employee.id}">
+                       value="0"/></td>
+            </c:when>
+            <c:when test="${not empty employee.id}">
+                value="<c:out value="${employee.id}"/>"/></td>
+            </c:when>
+            </c:choose></td>
+
         </tr>
         <tr>
             <td>Employee Email:</td>
@@ -23,7 +30,7 @@
         </tr>
         <tr>
             <td>Employee Salary:</td>
-            <td><input type="text" name="price" value="${employee.salary}$" required></td>
+            <td><input type="text" name="price" value="${employee.salary}" required></td>
         </tr>
         <tr>
             <td>Employee Password:</td>
@@ -31,15 +38,7 @@
         </tr>
         <tr>
             <td>Employee Birthday:</td>
-            <td><input type="date" name="birthDate"
-            <c:choose>
-            <c:when test="${employee.id == 0}">
-                       value="${date}"
-            </c:when>
-            <c:when test="${employee.id > 0}">
-                       value="${employee.birthDate}"
-            </c:when>
-            </c:choose> required></td>
+            <td><input type="date" name="birthDate" value="${employee.birthDate}"></td>
         </tr>
         <tr>
             <td>Departments:</td>
@@ -58,7 +57,7 @@
     <c:forEach var="item" items="${validationErrors}">
         <p style="color:red">${item}</p>
     </c:forEach>
-    <c:remove var="validationErrors" scope="session"/>
+    <c:remove var="validationErrors" scope="request"/>
 </form>
 
 </body>

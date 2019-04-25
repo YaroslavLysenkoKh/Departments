@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAddOrEditCommand implements Command {
-    public static String TO_EDIT_EMPLOYEE_PAGE = "/WEB-INF/jsp/employees/EditEmployee.jsp";
+    private static final String TO_EDIT_EMPLOYEE_PAGE = "/WEB-INF/jsp/employees/EditEmployee.jsp";
+    private static final String TO_EMPLOYEES_PAGE = "/WEB-INF/jsp/employees/employeesList.jsp";
 
 
     private EmployeeRequestExtractor employeeRequestExtractor;
@@ -36,20 +37,31 @@ public class EmployeeAddOrEditCommand implements Command {
         Employee employee = employeeRequestExtractor.extract(request);
         errors.addAll(employeeValidator.validate(employee));
         if (errors.isEmpty()) {
-            employeeService.add(employee);
-            request.setAttribute("employees", employeeService.getAll());
-            response.sendRedirect(request.getContextPath() + TO_EDIT_EMPLOYEE_PAGE);
-
+            finish(request, response, employee, employeeService);
         } else {
             backToPage(request, response, errors);
         }
     }
 
-    private void backToPage(HttpServletRequest request, HttpServletResponse response, List<String> errors) throws IOException, ServletException {
+    private void finish(HttpServletRequest request, HttpServletResponse response, Employee employee, EmployeeService employeeService) throws IOException {
+        if (employee.getId() == 0) {
+            employeeService.add(employee);
+        } else {
+            employeeService.update(employee);
+        }
+        request.setAttribute("employees", employeeService.getAll());
+        response.sendRedirect(request.getContextPath() + TO_EMPLOYEES_PAGE);
+    }
+
+    private void backToPage(HttpServletRequest request, HttpServletResponse response, List<String> errors) throws
+            IOException, ServletException {
 
         request.setAttribute("validationErrors", errors);
+        request.setAttribute("employeeId", request.getParameter("employeeId"));
         request.setAttribute("email", request.getParameter("email"));
+        request.setAttribute("password", request.getParameter("password"));
         request.setAttribute("salary", request.getParameter("salary"));
+        request.setAttribute("birthDate", request.getParameter("birthDate"));
         request.getRequestDispatcher(TO_EDIT_EMPLOYEE_PAGE).forward(request, response);
     }
 }

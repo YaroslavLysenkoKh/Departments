@@ -1,9 +1,8 @@
 package command;
 
-import command.impl.employees.DeleteEmployeeCommand;
-import command.impl.employees.DepartmentEmployeesCommand;
+import command.impl.departments.DeleteDepartmentCommand;
+import command.impl.employees.*;
 import command.impl.departments.DepartmentsListCommand;
-import command.impl.employees.GetEmployeeCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +11,14 @@ import java.util.Map;
 public class CommandContainer {
     private static Map<String, Command> commands = new HashMap();
 
-    {
+    static {
         put("departments", new DepartmentsListCommand());
-        put("departmentEmployees", new DepartmentEmployeesCommand());
+        put("departmentEmployees", new EmployeesListCommand());
         put("deleteEmployee", new DeleteEmployeeCommand());
         put("getToEditEmployee", new GetEmployeeCommand());
+        put("addEmployee", new EmployeeAddOrEditCommand());
+        put("deleteDepartment", new DeleteDepartmentCommand());
+//        put("toEdit", new TransferToAddMenu());
     }
 
     Command get(String commandName) {
@@ -28,7 +30,7 @@ public class CommandContainer {
         return commands.get(commandName);
     }
 
-    private void put(String commandName, Command command) {
+    private static void put(String commandName, Command command) {
         commands.put(commandName, command);
     }
 

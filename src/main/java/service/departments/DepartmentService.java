@@ -12,8 +12,12 @@ public interface DepartmentService {
 
     Department getById(Long id);
 
+    Department getByName(String name);
+
     boolean deleteById(Long id);
 
     boolean update(Department department);
+
+    boolean checkDepartmentExistenceByName(String name);
 
 }

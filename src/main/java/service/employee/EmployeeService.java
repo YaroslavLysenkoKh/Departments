@@ -19,6 +19,8 @@ public interface EmployeeService {
 
     boolean checkEmployeeExistenceByEmail(String email);
 
+    boolean checkEmployeeExistenceByDepartmentId(Long id);
+
     Employee getEmployeeByEmail(String email);
 
 }

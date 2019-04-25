@@ -16,6 +16,9 @@ public class Department {
         this.name = name;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public String toString() {

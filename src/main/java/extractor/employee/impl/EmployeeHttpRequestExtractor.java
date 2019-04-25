@@ -13,9 +13,7 @@ public class EmployeeHttpRequestExtractor implements EmployeeRequestExtractor {
     @Override
     public Employee extract(HttpServletRequest request) throws IOException, ServletException {
         Employee employee = new Employee();
-        Long id = Long.parseLong(request.getParameter("employeeId"));
-        if (id != null)
-            employee.setId(id);
+        employee.setId(Long.parseLong(request.getParameter("employeeId")));
         employee.setEmail(request.getParameter("email"));
         employee.setPassword(request.getParameter("password"));
         employee.setSalary(Integer.parseInt(request.getParameter("salary")));

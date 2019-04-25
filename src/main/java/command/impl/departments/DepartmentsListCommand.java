@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class DepartmentsListCommand implements Command {
-    private static final String FORWARD_DEPARTMENTS_PAGE = "/WEB-INF/jsp/departmentsList.jsp";
+    private static final String FORWARD_DEPARTMENTS_PAGE = "/WEB-INF/jsp/departments/departmentsList.jsp";
 
     private DepartmentService departmentService;
 

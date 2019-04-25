@@ -23,12 +23,10 @@ public class GetEmployeeCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        Long id = Long.parseLong(request.getParameter("employeeId"));
-        if (id == 0) {
+        if (true) {
             request.setAttribute("departments", departmentService.getAll());
         } else {
-            request.setAttribute("employee", employeeService.getById(id));
+            request.setAttribute("employee", employeeService.getById(Long.parseLong(request.getParameter("employeeId"))));
             request.setAttribute("departments", departmentService.getAll());
         }
 
