@@ -29,16 +29,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean add(Employee employee) throws ValidationException {
-        validator.validate(employee);
-        transactionManager.doInTransaction(connection -> {
-            employeesDao.add(employee, connection);
-            return null;
-        });
-        return true;
-    }
-
-    @Override
     public Employee getById(Long id) {
         return transactionManager.doInTransaction(connection -> employeesDao.getById(id, connection));
     }
@@ -47,16 +37,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean deleteById(Long id) {
         transactionManager.doInTransaction(connection -> {
             employeesDao.deleteById(id, connection);
-            return null;
-        });
-        return true;
-    }
-
-    @Override
-    public boolean update(Employee employee) throws ValidationException {
-        validator.validate(employee);
-        transactionManager.doInTransaction(connection -> {
-            employeesDao.update(employee, connection);
             return null;
         });
         return true;
@@ -90,5 +70,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeByEmail(String email) {
         return transactionManager.doInTransaction(connection -> employeesDao.getEmployeeByEmail(email, connection));
+    }
+
+    @Override
+    public boolean addOrUpdate(Employee employee) throws ValidationException {
+        validator.validate(employee);
+        transactionManager.doInTransaction(connection -> {
+            employeesDao.addOrUpdate(employee, connection);
+            return null;
+        });
+        return true;
     }
 }

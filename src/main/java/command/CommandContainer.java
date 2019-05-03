@@ -1,7 +1,7 @@
 package command;
 
 import command.impl.departments.DeleteDepartmentCommand;
-import command.impl.departments.DepartmentAddorEditCommand;
+import command.impl.departments.DepartmentAddOrEditCommand;
 import command.impl.departments.GetDepartmentCommand;
 import command.impl.employees.*;
 import command.impl.departments.DepartmentsListCommand;
@@ -23,7 +23,7 @@ public class CommandContainer {
         put("/addEmployee", new EmployeeAddOrEditCommand());
         put("/deleteDepartment", new DeleteDepartmentCommand());
         put("/getToEditDepartment", new GetDepartmentCommand());
-        put("/addDepartment", new DepartmentAddorEditCommand());
+        put("/addDepartment", new DepartmentAddOrEditCommand());
     }
 
     public Command getCommand(String commandName) {

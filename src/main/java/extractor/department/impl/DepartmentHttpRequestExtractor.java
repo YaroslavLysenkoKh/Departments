@@ -12,7 +12,7 @@ public class DepartmentHttpRequestExtractor implements DepartmentRequestExtracto
     public Department extract(HttpServletRequest request) throws IOException, ServletException {
         Department department = new Department();
         String departmentId = request.getParameter("departmentId");
-        if (departmentId.length() > 0)
+        if (departmentId.length() > 0 && departmentId != null)
             department.setId(Long.parseLong(departmentId));
         department.setName(request.getParameter("name"));
         return department;

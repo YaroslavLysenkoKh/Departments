@@ -14,7 +14,7 @@ public class EmployeeHttpRequestExtractor implements EmployeeRequestExtractor {
     public Employee extract(HttpServletRequest request) {
         Employee employee = new Employee();
         String id = request.getParameter("employeeId");
-        if (id.length() > 0)
+        if (id.length() > 0 && id != null)
             employee.setId(Long.parseLong(id));
         employee.setEmail(request.getParameter("email"));
         employee.setSalary(Integer.parseInt(request.getParameter("salary")));

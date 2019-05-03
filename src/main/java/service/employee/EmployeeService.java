@@ -8,13 +8,9 @@ import java.util.List;
 public interface EmployeeService {
     List<Employee> getAll();
 
-    boolean add(Employee employee) throws ValidationException;
-
     Employee getById(Long id);
 
     boolean deleteById(Long id);
-
-    boolean update(Employee employee) throws ValidationException;
 
     List<Employee> getAllByDepartmentId(Long id);
 
@@ -23,5 +19,7 @@ public interface EmployeeService {
     boolean checkEmployeeExistenceByDepartmentId(Long id);
 
     Employee getEmployeeByEmail(String email);
+
+    boolean addOrUpdate(Employee employee) throws ValidationException;
 
 }

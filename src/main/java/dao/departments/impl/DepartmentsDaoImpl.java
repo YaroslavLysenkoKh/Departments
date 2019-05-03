@@ -16,8 +16,8 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
     private static final String DELETE_DEPARTMENT_BY_ID = "DELETE FROM departments WHERE id=?";
 
     @Override
-    public void add(Department department, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DEPARTMENT)) {
+    public void addOrUpdate(Department department, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(department.getId() == null ? INSERT_DEPARTMENT : UPDATE_DEPARTMENT)) {
             preparedStatement.setString(1, department.getName());
             preparedStatement.executeUpdate();
         }
@@ -32,14 +32,6 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
                 result.add(extractDepartment(resultSet));
             }
             return result;
-        }
-    }
-
-    @Override
-    public void update(Department department, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_DEPARTMENT)) {
-            preparedStatement.setString(1, department.getName());
-            preparedStatement.executeUpdate();
         }
     }
 

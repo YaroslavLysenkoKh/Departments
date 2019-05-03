@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container ">
-    <p style="color:red">${errorMessage}</p>
+
     <p>
         <a href="getToEditDepartment?action=add" class="btn btn-primary" role="button">Add Department</a>
     </p>
@@ -29,11 +29,10 @@
                 <td><c:out value="${department.name}"></c:out></td>
                 <td>
                     <a href="departmentEmployees?departmentId=<c:out value="${department.id}"/>"
-                       class="btn btn-success" role="button">Employee
-                        List</a>
+                       class="btn btn-success" role="button">Employee List</a>
                 </td>
                 <td>
-                    <a href="getToEditDepartment?action=update&departmentId=<c:out value="${department.id}"/>"
+                    <a href="getToEditDepartment?departmentId=<c:out value="${department.id}"/>"
                        class="btn btn-warning" role="button">Edit</a>
                 </td>
                 <td>

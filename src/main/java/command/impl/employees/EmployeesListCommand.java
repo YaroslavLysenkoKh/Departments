@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class EmployeesListCommand implements Command {
 
-    private static final String FORWARD_EMPLOYEES_PAGE = "/WEB-INF/jsp/employees/employeesList.jsp";
     private EmployeeService employeeService;
 
     public EmployeesListCommand() {

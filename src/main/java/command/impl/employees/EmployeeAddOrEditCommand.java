@@ -16,10 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EmployeeAddOrEditCommand implements Command {
-    private static final String REDIRECT_TO_EMPLOYEES_LIST = "departmentEmployees?action=departmentEmployee&departmentId=";
-    private static final String TO_EDIT_EMPLOYEE_PAGE = "/WEB-INF/jsp/employees/EditEmployee.jsp";
-
-
     private EmployeeRequestExtractor employeeRequestExtractor;
     private EmployeeService employeeService;
     private DepartmentService departmentService;
@@ -33,26 +29,14 @@ public class EmployeeAddOrEditCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Employee employee = employeeRequestExtractor.extract(request);
-        finish(request, response, employee, employeeService);
-    }
-
-    private void finish(HttpServletRequest request, HttpServletResponse response, Employee employee, EmployeeService employeeService) throws IOException, ServletException {
         try {
-            if (employee.getId() == null) {
-                employeeService.add(employee);
-            } else {
-                employeeService.update(employee);
-            }
+            employeeService.addOrUpdate(employee);
         } catch (ValidationException e) {
-            backToPage(request, response, e, employee);
+            request.setAttribute("validationErrors", e.getErrorMap());
+            request.setAttribute("employee", employee);
+            request.setAttribute("departments", departmentService.getAll());
+            request.getRequestDispatcher(FORWARD_EDIT_EMPLOYEE_PAGE).forward(request, response);
         }
         response.sendRedirect(REDIRECT_TO_EMPLOYEES_LIST + employee.getDepartmentId());
-    }
-
-    private void backToPage(HttpServletRequest request, HttpServletResponse response, ValidationException e, Employee employee) throws ServletException, IOException {
-        request.setAttribute("validationErrors", e.getErrorMap());
-        request.setAttribute("employee", employee);
-        request.setAttribute("departments", departmentService.getAll());
-        request.getRequestDispatcher(TO_EDIT_EMPLOYEE_PAGE).forward(request, response);
     }
 }

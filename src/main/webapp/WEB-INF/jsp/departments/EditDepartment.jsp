@@ -10,32 +10,15 @@
 <div class="container">
     <form action="/addDepartment" method="post">
         <div class="form-addDepartment">
-            <label for="departmentId">Department Id</label>
-            <input type="text" class="form-control" id="departmentId" name="departmentId" readonly="readonly"
-                    <c:choose>
-                        <c:when test="${empty department.id}">
-                            value=""
-                        </c:when>
-                        <c:when test="${not empty department.id}">
-                            value="<c:out value="${department.id}"/>"
-                        </c:when>
-                    </c:choose>
-            />
-        </div>
-        <div class="form-addDepartment">
-            <label for="departmentName">Department Name</label>
-            <input type="text" class="form-control" id="departmentName" name="name"
+            <input type="hidden" name="departmentId" value="<c:out value="${department.id}" />">
+            <label>Department Name</label>
+            <input type="text" class="form-control" name="name"
                    value="<c:out value="${department.name}" />" placeholder="Enter name">
-            <small id="emailHelp" class="form-text text-muted">
-                <c:choose>
-                    <c:when test="${not empty validationErrors['name']}">
-                        <p style="color:red"><c:out value="${validationErrors['name']}"/></p>
-                    </c:when>
-                </c:choose>
+            <small class="form-text text-muted text-danger">
+                <c:out value="${validationErrors['name']}"/>
             </small>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <c:remove var="validationErrors" scope="request"/>
     </form>
 </div>
 </body>

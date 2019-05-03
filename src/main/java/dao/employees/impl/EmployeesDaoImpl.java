@@ -18,8 +18,8 @@ public class EmployeesDaoImpl implements EmployeesDao {
     private static final String UPDATE_EMPLOYEE = "UPDATE employees SET email=?,salary=?,birth_date=?,id_department=? WHERE id=?";
 
     @Override
-    public void add(Employee employee, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE)) {
+    public void addOrUpdate(Employee employee, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(employee.getId() == null ? INSERT_EMPLOYEE : UPDATE_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getEmail());
             preparedStatement.setInt(2, employee.getSalary());
             preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
@@ -48,19 +48,6 @@ public class EmployeesDaoImpl implements EmployeesDao {
         employee.setBirthDate(resultSet.getDate(4));
         employee.setDepartmentId(resultSet.getLong(5));
         return employee;
-    }
-
-
-    @Override
-    public void update(Employee employee, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
-            preparedStatement.setString(1, employee.getEmail());
-            preparedStatement.setInt(2, employee.getSalary());
-            preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
-            preparedStatement.setLong(4, employee.getDepartmentId());
-            preparedStatement.setLong(5, employee.getId());
-            preparedStatement.executeUpdate();
-        }
     }
 
     @Override
@@ -103,7 +90,6 @@ public class EmployeesDaoImpl implements EmployeesDao {
             if (resultSet.next())
                 return extractEmployee(resultSet);
             return null;
-
         }
     }
 }

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DepartmentsListCommand implements Command {
-    private static final String FORWARD_DEPARTMENTS_PAGE = "/WEB-INF/jsp/departments/departmentsList.jsp";
 
     private DepartmentService departmentService;
 
@@ -20,7 +19,6 @@ public class DepartmentsListCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         request.setAttribute("departments", departmentService.getAll());
         request.getRequestDispatcher(FORWARD_DEPARTMENTS_PAGE).forward(request, response);
     }

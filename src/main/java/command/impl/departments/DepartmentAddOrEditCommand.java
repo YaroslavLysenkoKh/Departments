@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DepartmentAddorEditCommand implements Command {
-    private static final String TO_DEPARTMENTS = "/WEB-INF/jsp/departments/EditDepartment.jsp";
+public class DepartmentAddOrEditCommand implements Command {
     private DepartmentService departmentService;
     private DepartmentRequestExtractor departmentRequestExtractor;
 
-    public DepartmentAddorEditCommand() {
+    public DepartmentAddOrEditCommand() {
         this.departmentService = new DepartmentServiceImpl();
         this.departmentRequestExtractor = new DepartmentHttpRequestExtractor();
     }
@@ -31,20 +30,13 @@ public class DepartmentAddorEditCommand implements Command {
 
     private void finish(HttpServletRequest request, HttpServletResponse response, Department department, DepartmentService departmentService) throws IOException, ServletException {
         try {
-            if (department.getId() == null) {
-                departmentService.add(department);
-            } else {
-                departmentService.update(department);
-            }
+            departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
-            backToPage(request, response, e, department);
+            request.setAttribute("validationErrors", e.getErrorMap());
+            request.setAttribute("department", department);
+            request.getRequestDispatcher(FORWARD_EDIT_DEPARTMENT_PAGE).forward(request, response);
         }
         response.sendRedirect("/");
     }
 
-    private void backToPage(HttpServletRequest request, HttpServletResponse response, ValidationException e, Department department) throws ServletException, IOException {
-        request.setAttribute("validationErrors", e.getErrorMap());
-        request.setAttribute("department", department);
-        request.getRequestDispatcher(TO_DEPARTMENTS).forward(request, response);
-    }
 }

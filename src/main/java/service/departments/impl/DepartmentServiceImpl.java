@@ -30,16 +30,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean add(Department department) throws ValidationException {
-        validator.validate(department);
-        transactionManager.doInTransaction(connection -> {
-            departmentsDao.add(department, connection);
-            return null;
-        });
-        return true;
-    }
-
-    @Override
     public Department getById(Long id) {
         return transactionManager.doInTransaction(connection -> departmentsDao.getById(id, connection));
     }
@@ -59,16 +49,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean update(Department department) throws ValidationException {
-        validator.validate(department);
-        transactionManager.doInTransaction(connection -> {
-            departmentsDao.update(department, connection);
-            return null;
-        });
-        return true;
-    }
-
-    @Override
     public boolean checkDepartmentExistenceByName(String name) {
         Department department = getByName(name);
         if (department != null) {
@@ -77,5 +57,15 @@ public class DepartmentServiceImpl implements DepartmentService {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean addOrUpdate(Department department) throws ValidationException {
+        validator.validate(department);
+        transactionManager.doInTransaction(connection -> {
+            departmentsDao.addOrUpdate(department, connection);
+            return null;
+        });
+        return true;
     }
 }
