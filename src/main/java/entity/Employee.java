@@ -3,6 +3,7 @@ package entity;
 import net.sf.oval.constraint.*;
 import util.oval.employee.EmailCheck;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,11 +18,6 @@ public class Employee {
     @NotNull
     @NotEmpty(message = "cannot be empty")
     private String email;
-    @MatchPattern(message = "minimum eight characters, at least one letter and one number", pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,21}$")
-    @NotNull
-    @NotEmpty(message = "cannot be empty")
-    @Length(min = 8, max = 20)
-    private String password;
     @MatchPattern(message = "cannot be less or equals than 0", pattern = "^\\d*$")
     @Min(value = 1)
     @NotNull
@@ -42,14 +38,6 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getSalary() {
@@ -91,7 +79,6 @@ public class Employee {
         Employee employee = (Employee) o;
         return Objects.equals(getId(), employee.getId()) &&
                 Objects.equals(getEmail(), employee.getEmail()) &&
-                Objects.equals(getPassword(), employee.getPassword()) &&
                 Objects.equals(getSalary(), employee.getSalary()) &&
                 Objects.equals(getBirthDate(), employee.getBirthDate()) &&
                 Objects.equals(getDepartmentId(), employee.getDepartmentId());
@@ -99,6 +86,6 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getPassword(), getSalary(), getBirthDate(), getDepartmentId());
+        return Objects.hash(getId(), getEmail(), getSalary(), getBirthDate(), getDepartmentId());
     }
 }

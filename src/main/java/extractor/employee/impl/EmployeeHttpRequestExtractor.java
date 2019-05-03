@@ -17,7 +17,6 @@ public class EmployeeHttpRequestExtractor implements EmployeeRequestExtractor {
         if (id.length() > 0)
             employee.setId(Long.parseLong(id));
         employee.setEmail(request.getParameter("email"));
-        employee.setPassword(request.getParameter("password"));
         employee.setSalary(Integer.parseInt(request.getParameter("salary")));
         employee.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
         setEmployeeDate(employee, request);

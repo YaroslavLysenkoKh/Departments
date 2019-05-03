@@ -25,3 +25,4 @@ public class DepartmentsListCommand implements Command {
         request.getRequestDispatcher(FORWARD_DEPARTMENTS_PAGE).forward(request, response);
     }
 }
+

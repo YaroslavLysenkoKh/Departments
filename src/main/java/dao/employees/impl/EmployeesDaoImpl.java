@@ -14,17 +14,16 @@ public class EmployeesDaoImpl implements EmployeesDao {
     private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employees WHERE id = ?";
     private static final String SELECT_EMPLOYEE_BY_EMAIL = "SELECT * FROM employees WHERE email = ?";
     private static final String DELETE_EMPLOYEE_BY_ID = "DELETE FROM employees WHERE id = ?";
-    private static final String INSERT_EMPLOYEE = "INSERT INTO employees VALUES (DEFAULT,?,?,?,?,?)";
-    private static final String UPDATE_EMPLOYEE = "UPDATE employees SET email=?,password=?,salary=?,birth_date=?,id_department=? WHERE id=?";
+    private static final String INSERT_EMPLOYEE = "INSERT INTO employees VALUES (DEFAULT,?,?,?,?)";
+    private static final String UPDATE_EMPLOYEE = "UPDATE employees SET email=?,salary=?,birth_date=?,id_department=? WHERE id=?";
 
     @Override
     public void add(Employee employee, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getEmail());
-            preparedStatement.setString(2, employee.getPassword());
-            preparedStatement.setInt(3, employee.getSalary());
-            preparedStatement.setDate(4, (Date) employee.getBirthDate());
-            preparedStatement.setLong(5, employee.getDepartmentId());
+            preparedStatement.setInt(2, employee.getSalary());
+            preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
+            preparedStatement.setLong(4, employee.getDepartmentId());
             preparedStatement.executeUpdate();
         }
     }
@@ -45,9 +44,9 @@ public class EmployeesDaoImpl implements EmployeesDao {
         Employee employee = new Employee();
         employee.setId(resultSet.getLong(1));
         employee.setEmail(resultSet.getString(2));
-        employee.setSalary(resultSet.getInt(4));
-        employee.setBirthDate(resultSet.getDate(5));
-        employee.setDepartmentId(resultSet.getLong(6));
+        employee.setSalary(resultSet.getInt(3));
+        employee.setBirthDate(resultSet.getDate(4));
+        employee.setDepartmentId(resultSet.getLong(5));
         return employee;
     }
 
@@ -56,11 +55,10 @@ public class EmployeesDaoImpl implements EmployeesDao {
     public void update(Employee employee, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getEmail());
-            preparedStatement.setString(2, employee.getPassword());
-            preparedStatement.setInt(3, employee.getSalary());
-            preparedStatement.setDate(4, (Date) employee.getBirthDate());
-            preparedStatement.setLong(5, employee.getDepartmentId());
-            preparedStatement.setLong(6, employee.getId());
+            preparedStatement.setInt(2, employee.getSalary());
+            preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
+            preparedStatement.setLong(4, employee.getDepartmentId());
+            preparedStatement.setLong(5, employee.getId());
             preparedStatement.executeUpdate();
         }
     }

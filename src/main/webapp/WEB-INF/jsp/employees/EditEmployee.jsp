@@ -38,17 +38,6 @@
             </small>
         </div>
         <div class="form-addEmployee">
-            <label for="employeePassword">Password</label>
-            <input type="password" class="form-control" id="employeePassword" placeholder="Password" name="password">
-            <small id="passwordHelp" class="form-text text-muted">
-                <c:choose>
-                    <c:when test="${not empty validationErrors['password']}">
-                        <p style="color:red"><c:out value="${validationErrors['password']}"/></p>
-                    </c:when>
-                </c:choose>
-            </small>
-        </div>
-        <div class="form-addEmployee">
             <label for="employeeSalary">Salary</label>
             <input type="text" class="form-control" id="employeeSalary" value="<c:out value="${employee.salary}" />"
                    placeholder="Salary" name="salary">
