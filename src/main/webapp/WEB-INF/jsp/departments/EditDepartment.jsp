@@ -2,40 +2,41 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="../../../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
-<form action="${pageContext.request.contextPath}/Controller" method="post">
-    <table cellpadding="2" cellspacing="2">
-        <tr>
-            <td>Employee Id:</td>
-            <td><input type="text" readonly="readonly" name="departmentId"
-            <c:choose>
-            <c:when test="${empty department.id}">
-                       value="0"/></td>
-            </c:when>
-            <c:when test="${not empty department.id}">
-                value="<c:out value="${department.id}"/>"/></td>
-            </c:when>
-            </c:choose> required></td>
-
-        </tr>
-        <tr>
-            <td>Department Name:</td>
-            <td><input type="text" name="name"
-                       value="<c:out value="${department.name}" />" autofocus required/></td>
-        </tr>
-        <tr>
-            <td><input type="hidden" name="command" value="addDepartment"/></td>
-            <td><input type="submit" value="Submit"/></td>
-        </tr>
-    </table>
-    <c:forEach var="item" items="${validationErrors}">
-        <p style="color:red">${item}</p>
-    </c:forEach>
-    <c:remove var="validationErrors" scope="request"/>
-</form>
-
+<div class="container">
+    <form action="/addDepartment" method="post">
+        <div class="form-addDepartment">
+            <label for="departmentId">Department Id</label>
+            <input type="text" class="form-control" id="departmentId" name="departmentId" readonly="readonly"
+                    <c:choose>
+                        <c:when test="${empty department.id}">
+                            value=""
+                        </c:when>
+                        <c:when test="${not empty department.id}">
+                            value="<c:out value="${department.id}"/>"
+                        </c:when>
+                    </c:choose>
+            />
+        </div>
+        <div class="form-addDepartment">
+            <label for="departmentName">Department Name</label>
+            <input type="text" class="form-control" id="departmentName" name="name"
+                   value="<c:out value="${department.name}" />" placeholder="Enter name">
+            <small id="emailHelp" class="form-text text-muted">
+                <c:choose>
+                    <c:when test="${not empty validationErrors['name']}">
+                        <p style="color:red"><c:out value="${validationErrors['name']}"/></p>
+                    </c:when>
+                </c:choose>
+            </small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <c:remove var="validationErrors" scope="request"/>
+    </form>
+</div>
 </body>
 </html>

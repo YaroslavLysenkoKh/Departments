@@ -13,10 +13,10 @@ import java.io.IOException;
 
 public class DeleteDepartmentCommand implements Command {
 
-    private static final String TO_DEPARTMENT_LIST = "/WEB-INF/jsp/departments/departmentsList.jsp";
+    private static final String TO_DEPARTMENT_LIST = "/";
 
-    DepartmentService departmentService;
-    EmployeeService employeeService;
+    private DepartmentService departmentService;
+    private EmployeeService employeeService;
 
     public DeleteDepartmentCommand() {
         this.departmentService = new DepartmentServiceImpl();
@@ -29,14 +29,11 @@ public class DeleteDepartmentCommand implements Command {
 
         if (employeeService.checkEmployeeExistenceByDepartmentId(id)) {
             invalideAction(request, response, departmentService);
-
         } else {
             departmentService.deleteById(id);
-            request.setAttribute("departments", departmentService.getAll());
+            response.sendRedirect("/");
         }
 
-
-        response.sendRedirect(request.getContextPath() + TO_DEPARTMENT_LIST);
     }
 
     private void invalideAction(HttpServletRequest request, HttpServletResponse response, DepartmentService departmentService) throws ServletException, IOException {

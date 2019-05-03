@@ -24,13 +24,9 @@ public class GetEmployeeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (request.getParameter("action").equals("update")) {
-            request.setAttribute("departments", departmentService.getAll());
             request.setAttribute("employee", employeeService.getById(Long.parseLong(request.getParameter("employeeId"))));
-        } else {
-            request.setAttribute("departments", departmentService.getAll());
         }
-
-
+        request.setAttribute("departments", departmentService.getAll());
         request.getRequestDispatcher(FORWARD_EDIT_EMPLOYEE_PAGE).forward(request, response);
     }
 }

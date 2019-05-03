@@ -1,6 +1,8 @@
 package command;
 
 import command.impl.departments.DeleteDepartmentCommand;
+import command.impl.departments.DepartmentAddorEditCommand;
+import command.impl.departments.GetDepartmentCommand;
 import command.impl.employees.*;
 import command.impl.departments.DepartmentsListCommand;
 
@@ -9,28 +11,30 @@ import java.util.Map;
 
 
 public class CommandContainer {
-    private static Map<String, Command> commands = new HashMap();
+    private Map<String, Command> commands = new HashMap();
 
-    static {
-        put("departments", new DepartmentsListCommand());
-        put("departmentEmployees", new EmployeesListCommand());
-        put("deleteEmployee", new DeleteEmployeeCommand());
-        put("getToEditEmployee", new GetEmployeeCommand());
-        put("addEmployee", new EmployeeAddOrEditCommand());
-        put("deleteDepartment", new DeleteDepartmentCommand());
-//        put("toEdit", new TransferToAddMenu());
+    private Command defaultCommand = new DepartmentsListCommand();
+
+    {
+        put("/", defaultCommand);
+        put("/departmentEmployees", new EmployeesListCommand());
+        put("/deleteEmployee", new DeleteEmployeeCommand());
+        put("/getToEditEmployee", new GetEmployeeCommand());
+        put("/addEmployee", new EmployeeAddOrEditCommand());
+        put("/deleteDepartment", new DeleteDepartmentCommand());
+        put("/getToEditDepartment", new GetDepartmentCommand());
+        put("/addDepartment", new DepartmentAddorEditCommand());
     }
 
-    Command get(String commandName) {
-        if (commandName == null || !commands.containsKey(commandName)) {
-            System.out.println("Command not found, name --> " + commandName);
-            return null;
-        }
-
+    public Command getCommand(String commandName) {
         return commands.get(commandName);
     }
 
-    private static void put(String commandName, Command command) {
+    public Command getDefaultCommand() {
+        return defaultCommand;
+    }
+
+    private void put(String commandName, Command command) {
         commands.put(commandName, command);
     }
 

@@ -1,11 +1,18 @@
 package entity;
 
-import java.util.Objects;
+
+import net.sf.oval.constraint.*;
+import util.oval.department.NameCheck;
 
 public class Department {
 
     private Long id;
 
+    @CheckWith(value = NameCheck.class, message = "department with such name already exists")
+    @MatchPattern(message = "use only letters and length must be from 1 char", pattern = "[A-Za-z\\\\u0400-\\\\u04FF]{1,}")
+    @Length(max = 20, message = "max char length is 20")
+    @NotNull
+    @NotEmpty(message = "cannot be empty")
     private String name;
 
     public String getName() {

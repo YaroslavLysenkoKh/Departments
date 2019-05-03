@@ -3,20 +3,24 @@ package service.employee.impl;
 import dao.employees.EmployeesDao;
 import dao.employees.impl.EmployeesDaoImpl;
 import entity.Employee;
+import exception.ValidationException;
 import service.employee.EmployeeService;
 import transaction.TransactionManager;
 import transaction.impl.TransactionManagerImpl;
+import util.validator.CustomValidator;
+import util.validator.impl.CustomValidatorImpl;
 
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
-
+    private final CustomValidator validator;
     private final TransactionManager transactionManager;
     private final EmployeesDao employeesDao;
 
     public EmployeeServiceImpl() {
         this.transactionManager = new TransactionManagerImpl();
         this.employeesDao = new EmployeesDaoImpl();
+        this.validator = new CustomValidatorImpl();
     }
 
     @Override
@@ -25,7 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean add(Employee employee) {
+    public boolean add(Employee employee) throws ValidationException {
+        validator.validate(employee);
         transactionManager.doInTransaction(connection -> {
             employeesDao.add(employee, connection);
             return null;
@@ -48,7 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean update(Employee employee) {
+    public boolean update(Employee employee) throws ValidationException {
+        validator.validate(employee);
         transactionManager.doInTransaction(connection -> {
             employeesDao.update(employee, connection);
             return null;
@@ -75,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean checkEmployeeExistenceByDepartmentId(Long id) {
         List<Employee> employees = getAllByDepartmentId(id);
-        if (employees != null) {
+        if (employees.size() > 0) {
             return true;
         }
         return false;

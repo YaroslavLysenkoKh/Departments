@@ -1,6 +1,7 @@
 package service.departments;
 
 import entity.Department;
+import exception.ValidationException;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface DepartmentService {
 
     List<Department> getAll();
 
-    boolean add(Department department);
+    boolean add(Department department) throws ValidationException;
 
     Department getById(Long id);
 
@@ -16,7 +17,7 @@ public interface DepartmentService {
 
     boolean deleteById(Long id);
 
-    boolean update(Department department);
+    boolean update(Department department) throws ValidationException;
 
     boolean checkDepartmentExistenceByName(String name);
 

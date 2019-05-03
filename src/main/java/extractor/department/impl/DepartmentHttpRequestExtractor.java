@@ -11,7 +11,9 @@ public class DepartmentHttpRequestExtractor implements DepartmentRequestExtracto
     @Override
     public Department extract(HttpServletRequest request) throws IOException, ServletException {
         Department department = new Department();
-        department.setId(Long.parseLong(request.getParameter("departmentId")));
+        String departmentId = request.getParameter("departmentId");
+        if (departmentId.length() > 0)
+            department.setId(Long.parseLong(departmentId));
         department.setName(request.getParameter("name"));
         return department;
     }

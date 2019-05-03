@@ -1,0 +1,18 @@
+.container {
+    padding: 50px;
+    background: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.delete {
+    align-items: center;
+}
+
+.deleteForm {
+    align-items: center;
+}

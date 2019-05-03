@@ -48,8 +48,9 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEPARTMENT_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return extractDepartment(resultSet);
+            if (resultSet.next())
+                return extractDepartment(resultSet);
+            return null;
         }
     }
 
@@ -73,8 +74,9 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DEPARTMENT_BY_NAME)) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return extractDepartment(resultSet);
+            if (resultSet.next())
+                return extractDepartment(resultSet);
+            return null;
         }
     }
 }

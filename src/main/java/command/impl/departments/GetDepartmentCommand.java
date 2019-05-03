@@ -9,19 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DepartmentsListCommand implements Command {
-    private static final String FORWARD_DEPARTMENTS_PAGE = "/WEB-INF/jsp/departments/departmentsList.jsp";
+public class GetDepartmentCommand implements Command {
+    private static final String FORWARD_EDIT_DEPARTMENT_PAGE = "/WEB-INF/jsp/departments/EditDepartment.jsp";
 
     private DepartmentService departmentService;
 
-    public DepartmentsListCommand() {
+    public GetDepartmentCommand() {
         this.departmentService = new DepartmentServiceImpl();
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        request.setAttribute("departments", departmentService.getAll());
-        request.getRequestDispatcher(FORWARD_DEPARTMENTS_PAGE).forward(request, response);
+        if (request.getParameter("action").equals("update")) {
+            request.setAttribute("department", departmentService.getById(Long.parseLong(request.getParameter("departmentId"))));
+        }
+        request.getRequestDispatcher(FORWARD_EDIT_DEPARTMENT_PAGE).forward(request, response);
     }
 }

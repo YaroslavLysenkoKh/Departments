@@ -3,18 +3,23 @@ package service.departments.impl;
 import dao.departments.DepartmentsDao;
 import dao.departments.impl.DepartmentsDaoImpl;
 import entity.Department;
+import exception.ValidationException;
 import service.departments.DepartmentService;
 import transaction.TransactionManager;
 import transaction.impl.TransactionManagerImpl;
+import util.validator.CustomValidator;
+import util.validator.impl.CustomValidatorImpl;
 
 import java.util.List;
 
 public class DepartmentServiceImpl implements DepartmentService {
 
+    private final CustomValidator validator;
     private final TransactionManager transactionManager;
     private final DepartmentsDao departmentsDao;
 
     public DepartmentServiceImpl() {
+        this.validator = new CustomValidatorImpl();
         this.transactionManager = new TransactionManagerImpl();
         this.departmentsDao = new DepartmentsDaoImpl();
     }
@@ -25,7 +30,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean add(Department department) {
+    public boolean add(Department department) throws ValidationException {
+        validator.validate(department);
         transactionManager.doInTransaction(connection -> {
             departmentsDao.add(department, connection);
             return null;
@@ -53,7 +59,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean update(Department department) {
+    public boolean update(Department department) throws ValidationException {
+        validator.validate(department);
         transactionManager.doInTransaction(connection -> {
             departmentsDao.update(department, connection);
             return null;

@@ -4,13 +4,12 @@ import command.Command;
 import service.employee.EmployeeService;
 import service.employee.impl.EmployeeServiceImpl;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteEmployeeCommand implements Command {
-    public static String REDIRECT_TO_EMPLOYEES_LIST = "/WEB-INF/jsp/employees/employeesList.jsp";
+    private static final String REDIRECT_TO_EMPLOYEES_LIST = "departmentEmployees?action=departmentEmployee&departmentId=";
 
     private EmployeeService employeeService;
 
@@ -19,12 +18,12 @@ public class DeleteEmployeeCommand implements Command {
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Long id = Long.parseLong(request.getParameter("employeeId"));
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Long employeeId = Long.parseLong(request.getParameter("employeeId"));
+        Long departmentId = Long.parseLong(request.getParameter("departmentId"));
 
-        employeeService.deleteById(id);
-        request.setAttribute("employees", employeeService.getAll());
+        employeeService.deleteById(employeeId);
 
-        response.sendRedirect(request.getContextPath() + REDIRECT_TO_EMPLOYEES_LIST);
+        response.sendRedirect(REDIRECT_TO_EMPLOYEES_LIST + departmentId);
     }
 }

@@ -47,6 +47,7 @@ public class EmployeesDaoImpl implements EmployeesDao {
         employee.setEmail(resultSet.getString(2));
         employee.setSalary(resultSet.getInt(4));
         employee.setBirthDate(resultSet.getDate(5));
+        employee.setDepartmentId(resultSet.getLong(6));
         return employee;
     }
 
@@ -101,7 +102,10 @@ public class EmployeesDaoImpl implements EmployeesDao {
             preparedStatement.setNString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            return extractEmployee(resultSet);
+            if (resultSet.next())
+                return extractEmployee(resultSet);
+            return null;
+
         }
     }
 }
