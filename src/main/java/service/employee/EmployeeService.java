@@ -22,4 +22,6 @@ public interface EmployeeService {
 
     boolean addOrUpdate(Employee employee) throws ValidationException;
 
+    Long countEmployeesByDepartmentId(Long Id);
+
 }

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentsDaoImpl implements DepartmentsDao {
-    private static final String SELECT_ALL_DEPARTMENTS = "SELECT * FROM departments";
+    private static final String SELECT_ALL_DEPARTMENTS = "select d.id, d.name, ifnull(count(e.id), 0) as 'employees number' from employees e " +
+            "right outer join departments d on e.id_department= d.id group by d.id";
     private static final String INSERT_DEPARTMENT = "INSERT INTO departments VALUES (DEFAULT, ?)";
     private static final String UPDATE_DEPARTMENT = "UPDATE departments SET name=? WHERE id=?";
     private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments WHERE id=?";
@@ -58,6 +59,7 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
         Department department = new Department();
         department.setId(resultSet.getLong(1));
         department.setName(resultSet.getString(2));
+        department.setCount(resultSet.getInt(3));
         return department;
     }
 

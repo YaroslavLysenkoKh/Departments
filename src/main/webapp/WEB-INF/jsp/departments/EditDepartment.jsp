@@ -13,7 +13,7 @@
             <label>Department Name</label>
             <input type="text" class="form-control" name="name"
                    value="<c:out value="${department.name}" />" placeholder="Enter name">
-            <small class="form-text text-muted text-danger">
+            <small class="text-danger">
                 <c:out value="${validationErrors['name']}"/>
             </small>
         </div>

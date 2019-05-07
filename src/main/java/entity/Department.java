@@ -15,6 +15,16 @@ public class Department {
     @NotEmpty(message = "cannot be empty")
     private String name;
 
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     public String getName() {
         return name;
     }

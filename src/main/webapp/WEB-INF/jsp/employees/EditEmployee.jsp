@@ -15,7 +15,7 @@
             <label>Email address</label>
             <input type="email" class="form-control" name="email" value="<c:out value="${employee.email}"/>"
                    placeholder="Enter email">
-            <small class="form-text text-muted text-danger">
+            <small class="text-danger">
                 <c:out value="${validationErrors['email']}"/>
             </small>
         </div>
@@ -23,7 +23,7 @@
             <label>Salary</label>
             <input type="text" class="form-control" value="<c:out value="${employee.salary}"/>"
                    placeholder="Salary" name="salary">
-            <small class="form-text text-muted text-danger">
+            <small class="text-danger">
                 <c:out value="${validationErrors['salary']}"/>
             </small>
         </div>
@@ -31,7 +31,7 @@
             <label>Birth Date</label>
             <input type="date" class="form-control"
                    value="<c:out value="${employee.birthDate}" />" placeholder="BirthDate" name="birthDate">
-            <small class="form-text text-muted text-danger">
+            <small class="text-danger">
                 <c:out value="${validationErrors['birthDate']}"/>
             </small>
         </div>

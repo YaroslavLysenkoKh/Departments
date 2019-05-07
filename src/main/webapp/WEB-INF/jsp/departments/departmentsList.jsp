@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -7,18 +6,18 @@
 <head>
     <link rel='stylesheet' href='webjars/bootstrap/4.3.1/css/bootstrap.min.css'>
     <link href="../../../css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="<c:url value="../../../script/deleteIsSatisfied.js"/>"></script>
+
 </head>
 <body>
 <div class="container ">
-
     <p>
-        <a href="getToEditDepartment?action=add" class="btn btn-primary" role="button">Add Department</a>
+        <a href="getToEditDepartment" class="btn btn-primary" role="button">Add Department</a>
     </p>
     <table class="table text-center" border="1">
         <thead class="thead-dark">
         <th class="text-center">Name</th>
         <th class="text-center" colspan=3>Action</th>
-
         </thead>
         <tbody>
         <c:choose>
@@ -40,7 +39,8 @@
                         <td>
                             <form method="post" action="/deleteDepartment">
                                 <input type="hidden" name="departmentId" value="<c:out value="${department.id}" />">
-                                <input type="submit" value="Delete" class="btn btn-danger"/>
+                                <input type="submit" value="Delete" class="btn btn-danger"
+                                       onclick="return isSatisfied(${department.count} , this.form)"/>
                             </form>
                         </td>
                     </tr>

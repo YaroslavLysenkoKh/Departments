@@ -3,7 +3,6 @@ package entity;
 import net.sf.oval.constraint.*;
 import util.oval.employee.EmailCheck;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 

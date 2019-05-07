@@ -81,4 +81,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         });
         return true;
     }
+
+    @Override
+    public Long countEmployeesByDepartmentId(Long id) {
+        return transactionManager.doInTransaction(connection -> employeesDao.countEmployeesByDepartmentId(id, connection));
+    }
 }
