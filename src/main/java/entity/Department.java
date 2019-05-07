@@ -9,7 +9,7 @@ public class Department {
     private Long id;
 
     @CheckWith(value = NameCheck.class, message = "department with such name already exists")
-    @MatchPattern(message = "use only letters and length must be from 1 char", pattern = "[A-Za-z\\\\u0400-\\\\u04FF]{1,}")
+    @MatchPattern(message = "at least one letter or number must be", pattern = "^[A-Za-z0-9\\\\u0400-\\\\u04FF]{1,}$")
     @Length(max = 20, message = "max char length is 20")
     @NotNull
     @NotEmpty(message = "cannot be empty")

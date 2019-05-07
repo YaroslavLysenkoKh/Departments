@@ -17,8 +17,8 @@ public class Employee {
     @NotNull
     @NotEmpty(message = "cannot be empty")
     private String email;
-    @MatchPattern(message = "cannot be less or equals than 0", pattern = "^\\d*$")
-    @Min(value = 1)
+    @MatchPattern(message = "only numbers", pattern = "^\\d*$")
+    @Min(value = 1, message = "cannot be less or equals than 0")
     @NotNull
     @Length()
     @NotEmpty(message = "cannot be empty")
