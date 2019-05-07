@@ -12,7 +12,8 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
             "right outer join departments d on e.id_department= d.id group by d.id";
     private static final String INSERT_DEPARTMENT = "INSERT INTO departments VALUES (DEFAULT, ?)";
     private static final String UPDATE_DEPARTMENT = "UPDATE departments SET name=? WHERE id=?";
-    private static final String SELECT_DEPARTMENT_BY_ID = "SELECT * FROM departments WHERE id=?";
+    private static final String SELECT_DEPARTMENT_BY_ID = "select d.id, d.name, ifnull(count(e.id), 0) as 'employees number' from employees e " +
+            "right outer join departments d on e.id_department= d.id where d.id =?";
     private static final String SELECT_DEPARTMENT_BY_NAME = "SELECT * FROM departments WHERE name=?";
     private static final String DELETE_DEPARTMENT_BY_ID = "DELETE FROM departments WHERE id=?";
 

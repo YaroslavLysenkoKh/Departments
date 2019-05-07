@@ -7,9 +7,16 @@
     <link href="../../../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="mx-auto" style="width: 200px;">
+    <p>
+        <a href="/" class="btn btn-link" role="button">Back To Departments</a>
+    </p>
+</div>
 <div class="container">
     <p>
-        <a href="getToEditEmployee" class="btn btn-primary" role="button">Add Employee</a>
+        <a href="getToEditEmployee?departmentId=<c:out value="${departmentId}" />" class="btn btn-primary"
+           role="button">Add
+            Employee</a>
     </p>
     <table class="table text-center" border="1">
         <thead class="thead-dark">

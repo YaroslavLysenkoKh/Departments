@@ -35,14 +35,29 @@
                 <c:out value="${validationErrors['birthDate']}"/>
             </small>
         </div>
-        <div class="form-addEmployee">
-            <label>Department select</label>
-            <select class="form-control" name="departmentId">
-                <c:forEach var="department" items="${departments}">
-                    <option value="${department.id}">${department.name}</option>
-                </c:forEach>
-            </select>
-        </div>
+        <c:choose>
+            <c:when test="${empty employee.id}">
+                <input type="hidden" name="departmentId" value="<c:out value="${employee.id}" />">
+            </c:when>
+            <c:when test="${not empty employee.id}">
+                <div class="form-addEmployee">
+                    <label>Department select</label>
+                    <select class="form-control" name="departmentId">
+                        <c:forEach var="department" items="${departments}">
+                            <option value="${department.id}">${department.name}</option>
+                            <c:choose>
+                                <c:when test="${department.id == employee.departmentId}">
+                                    <option selected value="${department.id}">${department.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${department.id}">${department.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                </div>
+            </c:when>
+        </c:choose>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
