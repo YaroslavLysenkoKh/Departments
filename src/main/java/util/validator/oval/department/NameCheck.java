@@ -1,9 +1,9 @@
-package util.oval.department;
+package util.validator.oval.department;
 
 import entity.Department;
 import net.sf.oval.constraint.CheckWithCheck;
 import service.departments.DepartmentService;
-import service.departments.impl.DepartmentServiceImpl;
+import service.impl.DepartmentServiceImpl;
 
 
 public class NameCheck implements CheckWithCheck.SimpleCheck {

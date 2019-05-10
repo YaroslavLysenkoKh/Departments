@@ -1,4 +1,4 @@
-package dao.departments.impl;
+package dao.impl;
 
 import dao.departments.DepartmentsDao;
 import entity.Department;

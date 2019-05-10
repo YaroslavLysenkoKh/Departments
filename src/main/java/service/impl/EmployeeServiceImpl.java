@@ -1,7 +1,7 @@
-package service.employee.impl;
+package service.impl;
 
 import dao.employees.EmployeesDao;
-import dao.employees.impl.EmployeesDaoImpl;
+import dao.impl.EmployeesDaoImpl;
 import entity.Employee;
 import exception.ValidationException;
 import service.employee.EmployeeService;

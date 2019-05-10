@@ -2,9 +2,9 @@ package command.impl.employees;
 
 import command.Command;
 import service.departments.DepartmentService;
-import service.departments.impl.DepartmentServiceImpl;
+import service.impl.DepartmentServiceImpl;
 import service.employee.EmployeeService;
-import service.employee.impl.EmployeeServiceImpl;
+import service.impl.EmployeeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

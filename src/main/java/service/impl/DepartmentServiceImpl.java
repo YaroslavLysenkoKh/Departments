@@ -1,7 +1,7 @@
-package service.departments.impl;
+package service.impl;
 
 import dao.departments.DepartmentsDao;
-import dao.departments.impl.DepartmentsDaoImpl;
+import dao.impl.DepartmentsDaoImpl;
 import entity.Department;
 import exception.ValidationException;
 import service.departments.DepartmentService;

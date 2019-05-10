@@ -6,7 +6,7 @@ import exception.ValidationException;
 import extractor.RequestExtractor;
 import extractor.department.DepartmentHttpRequestExtractor;
 import service.departments.DepartmentService;
-import service.departments.impl.DepartmentServiceImpl;
+import service.impl.DepartmentServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

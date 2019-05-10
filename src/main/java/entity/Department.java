@@ -2,7 +2,7 @@ package entity;
 
 
 import net.sf.oval.constraint.*;
-import util.oval.department.NameCheck;
+import util.validator.oval.department.NameCheck;
 
 public class Department {
 

@@ -1,4 +1,4 @@
-package dao.employees.impl;
+package dao.impl;
 
 import dao.employees.EmployeesDao;
 import entity.Employee;

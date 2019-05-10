@@ -1,7 +1,7 @@
 package entity;
 
 import net.sf.oval.constraint.*;
-import util.oval.employee.EmailCheck;
+import util.validator.oval.employee.EmailCheck;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,7 +18,7 @@ public class Employee {
     @NotNull
     @NotEmpty(message = "cannot be empty")
     private String email;
-    @MatchPattern(message = "only numbers", pattern = "^\\d*$")
+    @MatchPattern(message = "onqly numbers", pattern = "^\\d*$")
     @Min(value = 1, message = "cannot be empty and less or equals than 0")
     @NotNull(message = "only numbers allowed")
     @Length()

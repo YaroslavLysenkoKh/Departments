@@ -2,7 +2,7 @@ package command.impl.departments;
 
 import command.Command;
 import service.departments.DepartmentService;
-import service.departments.impl.DepartmentServiceImpl;
+import service.impl.DepartmentServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

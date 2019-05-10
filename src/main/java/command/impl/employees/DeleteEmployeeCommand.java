@@ -2,7 +2,7 @@ package command.impl.employees;
 
 import command.Command;
 import service.employee.EmployeeService;
-import service.employee.impl.EmployeeServiceImpl;
+import service.impl.EmployeeServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
