@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class CommandContainer {
-    private Map<String, Command> commands = new HashMap();
+    private Map<String, Command> commands = new HashMap<>();
 
     private Command defaultCommand = new DepartmentsListCommand();
 

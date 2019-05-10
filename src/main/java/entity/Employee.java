@@ -18,13 +18,12 @@ public class Employee {
     @NotEmpty(message = "cannot be empty")
     private String email;
     @MatchPattern(message = "only numbers", pattern = "^\\d*$")
-    @Min(value = 1, message = "cannot be less or equals than 0")
+    @Min(value = 1, message = "cannot be empty and less or equals than 0")
     @NotNull
     @Length()
-    @NotEmpty(message = "cannot be empty")
     private Integer salary;
     @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy")
-    @NotNull
+    @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
     private Date birthDate;
     @NotNull

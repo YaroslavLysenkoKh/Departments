@@ -48,21 +48,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean checkEmployeeExistenceByEmail(String email) {
-        Employee employee = getEmployeeByEmail(email);
+    public boolean checkEmployeeExistenceByEmail(Employee employee) {
+        Employee tmpEmployee = getEmployeeByEmail(employee.getEmail());
         if (employee != null) {
-            if (employee.getEmail().equals(email)) {
+            if (tmpEmployee.getId() == employee.getId() && tmpEmployee.getEmail().equals(employee.getEmail())) {
+                return false;
+            }
+            if (tmpEmployee.getEmail().equals(employee.getEmail())) {
                 return true;
             }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean checkEmployeeExistenceByDepartmentId(Long id) {
-        List<Employee> employees = getAllByDepartmentId(id);
-        if (employees.size() > 0) {
-            return true;
         }
         return false;
     }
@@ -80,10 +74,5 @@ public class EmployeeServiceImpl implements EmployeeService {
             return null;
         });
         return true;
-    }
-
-    @Override
-    public Long countEmployeesByDepartmentId(Long id) {
-        return transactionManager.doInTransaction(connection -> employeesDao.countEmployeesByDepartmentId(id, connection));
     }
 }

@@ -16,7 +16,6 @@ public class EmployeesDaoImpl implements EmployeesDao {
     private static final String DELETE_EMPLOYEE_BY_ID = "DELETE FROM employees WHERE id = ?";
     private static final String INSERT_EMPLOYEE = "INSERT INTO employees VALUES (DEFAULT,?,?,?,?)";
     private static final String UPDATE_EMPLOYEE = "UPDATE employees SET email=?,salary=?,birth_date=?,id_department=? WHERE id=?";
-    private static final String COUNT_EMPLOYEES_BY_DEPARTMENT_ID = "SELECT COUNT(id) from employees where id_department =?";
 
     @Override
     public void addOrUpdate(Employee employee, Connection connection) throws SQLException {
@@ -25,6 +24,9 @@ public class EmployeesDaoImpl implements EmployeesDao {
             preparedStatement.setInt(2, employee.getSalary());
             preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
             preparedStatement.setLong(4, employee.getDepartmentId());
+            if (employee.getId() != null) {
+                preparedStatement.setLong(5, employee.getId());
+            }
             preparedStatement.executeUpdate();
         }
     }
@@ -91,18 +93,6 @@ public class EmployeesDaoImpl implements EmployeesDao {
             if (resultSet.next())
                 return extractEmployee(resultSet);
             return null;
-        }
-    }
-
-    @Override
-    public Long countEmployeesByDepartmentId(Long id, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_EMPLOYEES_BY_DEPARTMENT_ID)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Long result = null;
-            if (resultSet.next())
-                result = resultSet.getLong(1);
-            return result;
         }
     }
 }

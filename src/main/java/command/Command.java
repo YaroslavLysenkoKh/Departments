@@ -15,7 +15,7 @@ public interface Command extends Serializable {
     String FORWARD_EDIT_EMPLOYEE_PAGE = "/WEB-INF/jsp/employees/EditEmployee.jsp";
 
 
-    public abstract void execute(HttpServletRequest request,
-                                 HttpServletResponse response) throws IOException, ServletException;
+    void execute(HttpServletRequest request,
+                 HttpServletResponse response) throws IOException, ServletException;
 
 }

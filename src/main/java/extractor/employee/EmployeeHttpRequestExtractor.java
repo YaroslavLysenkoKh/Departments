@@ -1,7 +1,8 @@
-package extractor.employee.impl;
+package extractor.employee;
 
 import entity.Employee;
-import extractor.employee.EmployeeRequestExtractor;
+import extractor.RequestExtractor;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -9,15 +10,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EmployeeHttpRequestExtractor implements EmployeeRequestExtractor {
+public class EmployeeHttpRequestExtractor implements RequestExtractor<Employee> {
     @Override
     public Employee extract(HttpServletRequest request) {
         Employee employee = new Employee();
         String id = request.getParameter("employeeId");
-        if (id.length() > 0 && id != null)
+        if (!StringUtils.isEmpty(id))
             employee.setId(Long.parseLong(id));
         employee.setEmail(request.getParameter("email"));
-        employee.setSalary(Integer.parseInt(request.getParameter("salary")));
+        String salary = request.getParameter("salary");
+        if (StringUtils.isBlank(salary)) {
+            employee.setSalary(0);
+        } else {
+            employee.setSalary(Integer.parseInt(salary));
+        }
         employee.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
         setEmployeeDate(employee, request);
         return employee;

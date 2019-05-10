@@ -65,6 +65,13 @@
             <artifactId>bootstrap</artifactId>
             <version>4.3.1</version>
         </dependency>
+        <!-- apache.commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>departments</finalName>

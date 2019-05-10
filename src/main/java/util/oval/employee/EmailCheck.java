@@ -17,7 +17,7 @@ public class EmailCheck implements CheckWithCheck.SimpleCheck {
         Employee employee = (Employee) validatedObject;
         if (employee.getEmail().isEmpty())
             return false;
-        if (employeeService.checkEmployeeExistenceByEmail(((Employee) validatedObject).getEmail()))
+        if (employeeService.checkEmployeeExistenceByEmail(((Employee) validatedObject)))
             return false;
         return true;
     }

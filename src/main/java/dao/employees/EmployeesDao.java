@@ -13,5 +13,4 @@ public interface EmployeesDao extends GenericDao<Employee> {
 
     Employee getEmployeeByEmail(String email, Connection connection) throws SQLException;
 
-    Long countEmployeesByDepartmentId(Long id, Connection connection) throws SQLException;
 }

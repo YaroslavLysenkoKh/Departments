@@ -18,7 +18,7 @@ public class NameCheck implements CheckWithCheck.SimpleCheck {
         Department department = (Department) validatedObject;
         if (department.getName().isEmpty())
             return false;
-        if (departmentService.checkDepartmentExistenceByName(department.getName()))
+        if (departmentService.checkDepartmentExistenceByName(department))
             return false;
         return true;
     }

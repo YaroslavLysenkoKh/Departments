@@ -14,14 +14,10 @@ public interface EmployeeService {
 
     List<Employee> getAllByDepartmentId(Long id);
 
-    boolean checkEmployeeExistenceByEmail(String email);
-
-    boolean checkEmployeeExistenceByDepartmentId(Long id);
+    boolean checkEmployeeExistenceByEmail(Employee employee);
 
     Employee getEmployeeByEmail(String email);
 
     boolean addOrUpdate(Employee employee) throws ValidationException;
-
-    Long countEmployeesByDepartmentId(Long Id);
 
 }

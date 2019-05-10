@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentsDaoImpl implements DepartmentsDao {
-    private static final String SELECT_ALL_DEPARTMENTS = "select d.id, d.name, ifnull(count(e.id), 0) as 'employees number' from employees e " +
+    private static final String SELECT_ALL_DEPARTMENTS_OUTER_JOIN = "select d.id, d.name, ifnull(count(e.id), 0) as 'employees number' from employees e " +
             "right outer join departments d on e.id_department= d.id group by d.id";
     private static final String INSERT_DEPARTMENT = "INSERT INTO departments VALUES (DEFAULT, ?)";
     private static final String UPDATE_DEPARTMENT = "UPDATE departments SET name=? WHERE id=?";
@@ -28,7 +28,7 @@ public class DepartmentsDaoImpl implements DepartmentsDao {
     @Override
     public List<Department> getAll(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SELECT_ALL_DEPARTMENTS)) {
+             ResultSet resultSet = statement.executeQuery(SELECT_ALL_DEPARTMENTS_OUTER_JOIN)) {
             List<Department> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add(extractDepartment(resultSet));

@@ -3,8 +3,8 @@ package command.impl.departments;
 import command.Command;
 import entity.Department;
 import exception.ValidationException;
-import extractor.department.DepartmentRequestExtractor;
-import extractor.department.impl.DepartmentHttpRequestExtractor;
+import extractor.RequestExtractor;
+import extractor.department.DepartmentHttpRequestExtractor;
 import service.departments.DepartmentService;
 import service.departments.impl.DepartmentServiceImpl;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class DepartmentAddOrEditCommand implements Command {
     private DepartmentService departmentService;
-    private DepartmentRequestExtractor departmentRequestExtractor;
+    private RequestExtractor<Department> departmentRequestExtractor;
 
     public DepartmentAddOrEditCommand() {
         this.departmentService = new DepartmentServiceImpl();
@@ -25,18 +25,12 @@ public class DepartmentAddOrEditCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Department department = departmentRequestExtractor.extract(request);
-        finish(request, response, department, departmentService);
-    }
-
-    private void finish(HttpServletRequest request, HttpServletResponse response, Department department, DepartmentService departmentService) throws IOException, ServletException {
         try {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
             request.setAttribute("validationErrors", e.getErrorMap());
-            request.setAttribute("department", department);
             request.getRequestDispatcher(FORWARD_EDIT_DEPARTMENT_PAGE).forward(request, response);
         }
         response.sendRedirect("/");
     }
-
 }

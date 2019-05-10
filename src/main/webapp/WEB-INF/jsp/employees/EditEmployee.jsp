@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <html>
 <head>
     <link rel='stylesheet' href='webjars/bootstrap/4.3.1/css/bootstrap.min.css'>
@@ -10,10 +9,14 @@
 <body>
 <div class="container">
     <form action="/addEmployee" method="post">
-        <input type="hidden" name="employeeId" value="<c:out value="${employee.id}"/>">
-        <div class="form-addEmployee">
+        <div class=" form-addEmployee">
+            <input type="text" name="employeeId"
+                   value="<c:out value="${param['employeeId'] eq null ? employee.id : param['employeeId']}"/>" readonly>
+        </div>
+        <div class=" form-addEmployee">
             <label>Email address</label>
-            <input type="email" class="form-control" name="email" value="<c:out value="${employee.email}"/>"
+            <input type="email" class="form-control" name="email"
+                   value="<c:out value="${not empty employee ? employee.email : param.email}"/>"
                    placeholder="Enter email">
             <small class="text-danger">
                 <c:out value="${validationErrors['email']}"/>
@@ -21,7 +24,8 @@
         </div>
         <div class="form-addEmployee">
             <label>Salary</label>
-            <input type="text" class="form-control" value="<c:out value="${employee.salary}"/>"
+            <input type="text" class="form-control"
+                   value="<c:out value="${not empty employee ? employee.salary : param.salary}"/>"
                    placeholder="Salary" name="salary">
             <small class="text-danger">
                 <c:out value="${validationErrors['salary']}"/>
@@ -30,21 +34,22 @@
         <div class="form-addEmployee">
             <label>Birth Date</label>
             <input type="date" class="form-control"
-                   value="<c:out value="${employee.birthDate}" />" placeholder="BirthDate" name="birthDate">
+                   value="<c:out value="${not empty employee ? employee.birthDate : param.birthDate}"/>"
+                   placeholder="BirthDate" name="birthDate">
             <small class="text-danger">
                 <c:out value="${validationErrors['birthDate']}"/>
             </small>
         </div>
         <c:choose>
-            <c:when test="${empty employee.id}">
-                <input type="hidden" name="departmentId" value="<c:out value="${employee.id}" />">
+            <c:when test="${empty param['employeeId']}">
+                <input type="hidden" name="departmentId"
+                       value="<c:out value="${not empty employee ? departmentId : param.departmentId}"/>">
             </c:when>
-            <c:when test="${not empty employee.id}">
+            <c:otherwise>
                 <div class="form-addEmployee">
                     <label>Department select</label>
                     <select class="form-control" name="departmentId">
                         <c:forEach var="department" items="${departments}">
-                            <option value="${department.id}">${department.name}</option>
                             <c:choose>
                                 <c:when test="${department.id == employee.departmentId}">
                                     <option selected value="${department.id}">${department.name}</option>
@@ -56,7 +61,7 @@
                         </c:forEach>
                     </select>
                 </div>
-            </c:when>
+            </c:otherwise>
         </c:choose>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

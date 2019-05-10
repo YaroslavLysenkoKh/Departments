@@ -11,11 +11,9 @@ public interface DepartmentService {
 
     Department getById(Long id);
 
-    Department getByName(String name);
-
     boolean deleteById(Long id);
 
-    boolean checkDepartmentExistenceByName(String name);
+    boolean checkDepartmentExistenceByName(Department department);
 
     boolean addOrUpdate(Department department) throws ValidationException;
 

@@ -35,11 +35,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getByName(String name) {
-        return transactionManager.doInTransaction(connection -> departmentsDao.getByName(name, connection));
-    }
-
-    @Override
     public boolean deleteById(Long id) {
         transactionManager.doInTransaction(connection -> {
             departmentsDao.deleteById(id, connection);
@@ -49,10 +44,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public boolean checkDepartmentExistenceByName(String name) {
-        Department department = getByName(name);
-        if (department != null) {
-            if (department.getName().equals(name)) {
+    public boolean checkDepartmentExistenceByName(Department department) {
+        Department tmpDepartment = getById(department.getId());
+        if (tmpDepartment != null) {
+            if (tmpDepartment.getName().equals(department.getName())) {
                 return true;
             }
         }
