@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="container">
-    <%--    <c:set var="department" scope="request" value="${department}"/>--%>
     <form action="/addDepartment" method="post">
         <div class="form-addDepartment">
             <input type="hidden" name="departmentId"

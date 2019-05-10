@@ -13,6 +13,7 @@ public interface Command extends Serializable {
     String REDIRECT_TO_EMPLOYEES_LIST = "departmentEmployees?action=departmentEmployee&departmentId=";
     String FORWARD_EMPLOYEES_PAGE = "/WEB-INF/jsp/employees/employeesList.jsp";
     String FORWARD_EDIT_EMPLOYEE_PAGE = "/WEB-INF/jsp/employees/EditEmployee.jsp";
+    String FORWARD_ERROR_PAGE = "/WEB-INF/jsp/errorPage.jsp";
 
 
     void execute(HttpServletRequest request,

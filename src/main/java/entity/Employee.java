@@ -3,6 +3,7 @@ package entity;
 import net.sf.oval.constraint.*;
 import util.oval.employee.EmailCheck;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class Employee {
     @Min(value = 1, message = "cannot be empty and less or equals than 0")
     @NotNull
     @Length()
-    private Integer salary;
+    private BigDecimal salary;
     @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy")
     @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
@@ -38,11 +39,11 @@ public class Employee {
         this.email = email;
     }
 
-    public int getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 

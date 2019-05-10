@@ -21,7 +21,7 @@ public class EmployeesDaoImpl implements EmployeesDao {
     public void addOrUpdate(Employee employee, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(employee.getId() == null ? INSERT_EMPLOYEE : UPDATE_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getEmail());
-            preparedStatement.setInt(2, employee.getSalary());
+            preparedStatement.setBigDecimal(2, employee.getSalary());
             preparedStatement.setDate(3, new Date(employee.getBirthDate().getTime()));
             preparedStatement.setLong(4, employee.getDepartmentId());
             if (employee.getId() != null) {
@@ -47,7 +47,7 @@ public class EmployeesDaoImpl implements EmployeesDao {
         Employee employee = new Employee();
         employee.setId(resultSet.getLong(1));
         employee.setEmail(resultSet.getString(2));
-        employee.setSalary(resultSet.getInt(3));
+        employee.setSalary(resultSet.getBigDecimal(3));
         employee.setBirthDate(resultSet.getDate(4));
         employee.setDepartmentId(resultSet.getLong(5));
         return employee;

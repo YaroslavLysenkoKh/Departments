@@ -28,7 +28,7 @@ public class EmployeeAddOrEditCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Employee employee = employeeRequestExtractor.extract(request);
+        Employee employee = employeeRequestExtractor.extract(request, response);
         try {
             employeeService.addOrUpdate(employee);
         } catch (ValidationException e) {

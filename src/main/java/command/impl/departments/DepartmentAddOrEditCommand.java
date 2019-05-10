@@ -24,7 +24,7 @@ public class DepartmentAddOrEditCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Department department = departmentRequestExtractor.extract(request);
+        Department department = departmentRequestExtractor.extract(request, response);
         try {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
