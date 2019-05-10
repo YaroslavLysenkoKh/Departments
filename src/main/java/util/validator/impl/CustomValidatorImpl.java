@@ -8,6 +8,7 @@ import net.sf.oval.context.OValContext;
 import util.validator.CustomValidator;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class CustomValidatorImpl implements CustomValidator {
 
     private Validator validator;
-    private Map<String, String> errorMap;
+    private Map<String, List<String>> errorMap;
 
 
     public CustomValidatorImpl() {
@@ -25,6 +26,7 @@ public class CustomValidatorImpl implements CustomValidator {
 
     public void validate(Object validateObject) throws ValidationException {
         List<ConstraintViolation> violationList = validator.validate(validateObject);
+
         if (!violationList.isEmpty()) {
             for (ConstraintViolation violation : violationList) {
                 String value = violation.getMessage();
@@ -32,8 +34,15 @@ public class CustomValidatorImpl implements CustomValidator {
                 if (context instanceof FieldContext) {
                     Field field = ((FieldContext) context).getField();
                     String key = field.getName();
-                    errorMap.put(key, value);
+                    if (errorMap.get(key) == null) {
+                        List<String> tmpList = new ArrayList<>();
+                        tmpList.add(value);
+                        errorMap.put(key, tmpList);
+                    } else {
+                        errorMap.get(key).add(value);
+                    }
                 }
+
             }
             throw new ValidationException(errorMap);
         }

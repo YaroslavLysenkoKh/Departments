@@ -10,7 +10,7 @@
 <div class="container">
     <form action="/addEmployee" method="post">
         <div class=" form-addEmployee">
-            <input type="text" name="employeeId"
+            <input type="hidden" name="employeeId"
                    value="<c:out value="${param['employeeId'] eq null ? employee.id : param['employeeId']}"/>" readonly>
         </div>
         <div class=" form-addEmployee">

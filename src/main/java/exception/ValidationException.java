@@ -1,17 +1,18 @@
 package exception;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ValidationException extends Exception {
 
-    private Map<String, String> errorMap = new HashMap<>();
+    private Map<String, List<String>> errorMap = new HashMap<>();
 
-    public ValidationException(Map<String, String> errorMap) {
+    public ValidationException(Map<String, List<String>> errorMap) {
         this.errorMap = errorMap;
     }
 
-    public Map<String, String> getErrorMap() {
+    public Map<String, List<String>> getErrorMap() {
         return errorMap;
     }
 

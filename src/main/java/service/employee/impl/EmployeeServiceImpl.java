@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean checkEmployeeExistenceByEmail(Employee employee) {
         Employee tmpEmployee = getEmployeeByEmail(employee.getEmail());
-        if (employee != null) {
+        if (tmpEmployee != null) {
             if (tmpEmployee.getId() == employee.getId() && tmpEmployee.getEmail().equals(employee.getEmail())) {
                 return false;
             }

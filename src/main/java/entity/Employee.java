@@ -20,7 +20,7 @@ public class Employee {
     private String email;
     @MatchPattern(message = "only numbers", pattern = "^\\d*$")
     @Min(value = 1, message = "cannot be empty and less or equals than 0")
-    @NotNull
+    @NotNull(message = "only numbers allowed")
     @Length()
     private BigDecimal salary;
     @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy")
