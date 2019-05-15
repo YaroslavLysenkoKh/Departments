@@ -52,7 +52,6 @@
             <artifactId>oval</artifactId>
             <version>1.90</version>
         </dependency>
-
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
@@ -71,23 +70,32 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.0</version>
         </dependency>
-
         <!-- hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.4.2.Final</version>
         </dependency>
-
         <!-- hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.4.2.Final</version>
         </dependency>
-
-
+        <!-- spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <!-- spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>departments</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
