@@ -6,9 +6,9 @@ import exception.ValidationException;
 import extractor.RequestExtractor;
 import extractor.employee.EmployeeHttpRequestExtractor;
 import service.departments.DepartmentService;
-import service.impl.DepartmentServiceImpl;
 import service.employee.EmployeeService;
-import service.impl.EmployeeServiceImpl;
+import service.impl.DepartmentHiberSerivceImpl;
+import service.impl.EmployeeHiberServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +22,8 @@ public class EmployeeAddOrEditCommand implements Command {
 
     public EmployeeAddOrEditCommand() {
         this.employeeRequestExtractor = new EmployeeHttpRequestExtractor();
-        this.employeeService = new EmployeeServiceImpl();
-        this.departmentService = new DepartmentServiceImpl();
+        this.employeeService = new EmployeeHiberServiceImpl();
+        this.departmentService = new DepartmentHiberSerivceImpl();
     }
 
     @Override
@@ -36,6 +36,6 @@ public class EmployeeAddOrEditCommand implements Command {
             request.setAttribute("departments", departmentService.getAll());
             request.getRequestDispatcher(FORWARD_EDIT_EMPLOYEE_PAGE).forward(request, response);
         }
-        response.sendRedirect(REDIRECT_TO_EMPLOYEES_LIST + employee.getDepartmentId());
+        response.sendRedirect(REDIRECT_TO_EMPLOYEES_LIST + employee.getDepartment().getId());
     }
 }

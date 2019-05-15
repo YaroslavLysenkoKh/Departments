@@ -2,7 +2,7 @@ package command.impl.departments;
 
 import command.Command;
 import service.departments.DepartmentService;
-import service.impl.DepartmentServiceImpl;
+import service.impl.DepartmentHiberSerivceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +13,7 @@ public class DeleteDepartmentCommand implements Command {
     private DepartmentService departmentService;
 
     public DeleteDepartmentCommand() {
-        this.departmentService = new DepartmentServiceImpl();
+        this.departmentService = new DepartmentHiberSerivceImpl();
     }
 
     @Override

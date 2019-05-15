@@ -3,6 +3,8 @@ package extractor.employee;
 import entity.Employee;
 import extractor.RequestExtractor;
 import org.apache.commons.lang3.StringUtils;
+import service.departments.DepartmentService;
+import service.impl.DepartmentHiberSerivceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EmployeeHttpRequestExtractor implements RequestExtractor<Employee> {
+    private final DepartmentService departmentService;
+
+    public EmployeeHttpRequestExtractor() {
+        this.departmentService = new DepartmentHiberSerivceImpl();
+    }
+
     @Override
     public Employee extract(HttpServletRequest request, HttpServletResponse response) {
         Employee employee = new Employee();
@@ -20,7 +28,7 @@ public class EmployeeHttpRequestExtractor implements RequestExtractor<Employee> 
         if (!StringUtils.isEmpty(id))
             employee.setId(Long.parseLong(id));
         employee.setEmail(request.getParameter("email"));
-        employee.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
+        employee.setDepartment(departmentService.getById(Long.parseLong(request.getParameter("departmentId"))));
         setSalary(employee, request);
         setEmployeeDate(employee, request);
         return employee;
@@ -42,7 +50,7 @@ public class EmployeeHttpRequestExtractor implements RequestExtractor<Employee> 
         if (StringUtils.isBlank(salary)) {
             employee.setSalary(new BigDecimal("0"));
         } else {
-            if (salary.matches("^\\d*$")) {
+            if (salary.matches("(^\\d*$)|(^-?\\d*\\.\\d{2}$)")) {
                 employee.setSalary(new BigDecimal(salary));
             } else {
                 employee.setSalary(null);

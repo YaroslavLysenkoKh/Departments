@@ -18,6 +18,7 @@
             <small class="text-danger">
                 <c:out value="${validationErrors['name']}"/>
             </small>
+            <c:remove var="validationErrors" scope="request"/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

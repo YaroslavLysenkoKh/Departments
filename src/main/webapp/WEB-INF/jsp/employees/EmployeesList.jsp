@@ -45,7 +45,7 @@
                             <form method="post" action="/deleteEmployee" class="deleteForm">
                                 <input type="hidden" name="employeeId" value="<c:out value="${employee.id}" />">
                                 <input type="hidden" name="departmentId"
-                                       value="<c:out value="${employee.departmentId}" />">
+                                       value="<c:out value="${employee.department.id}" />">
                                 <input type="submit" value="Delete" class="btn btn-danger"/>
                             </form>
                         </td>

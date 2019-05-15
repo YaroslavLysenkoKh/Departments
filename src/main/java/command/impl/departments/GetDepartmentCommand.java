@@ -2,7 +2,7 @@ package command.impl.departments;
 
 import command.Command;
 import service.departments.DepartmentService;
-import service.impl.DepartmentServiceImpl;
+import service.impl.DepartmentHiberSerivceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ public class GetDepartmentCommand implements Command {
     private DepartmentService departmentService;
 
     public GetDepartmentCommand() {
-        this.departmentService = new DepartmentServiceImpl();
+        this.departmentService = new DepartmentHiberSerivceImpl();
     }
 
     @Override

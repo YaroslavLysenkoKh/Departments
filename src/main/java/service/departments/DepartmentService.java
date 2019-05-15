@@ -11,10 +11,12 @@ public interface DepartmentService {
 
     Department getById(Long id);
 
-    boolean deleteById(Long id);
+    Department getByName(String name);
+
+    void deleteById(Long id);
 
     boolean checkDepartmentExistenceByName(Department department);
 
-    boolean addOrUpdate(Department department) throws ValidationException;
+    void addOrUpdate(Department department) throws ValidationException;
 
 }

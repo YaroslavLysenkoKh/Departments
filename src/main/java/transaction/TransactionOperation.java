@@ -1,8 +1,8 @@
 package transaction;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import org.hibernate.Session;
+
 
 public interface TransactionOperation<T> {
-    T execute(Connection connection) throws SQLException;
+    T execute(Session connection);
 }

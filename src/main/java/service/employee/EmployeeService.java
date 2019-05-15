@@ -6,11 +6,10 @@ import exception.ValidationException;
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> getAll();
 
     Employee getById(Long id);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 
     List<Employee> getAllByDepartmentId(Long id);
 
@@ -18,6 +17,6 @@ public interface EmployeeService {
 
     Employee getEmployeeByEmail(String email);
 
-    boolean addOrUpdate(Employee employee) throws ValidationException;
+    void addOrUpdate(Employee employee) throws ValidationException;
 
 }

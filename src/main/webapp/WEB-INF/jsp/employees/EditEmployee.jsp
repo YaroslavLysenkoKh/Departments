@@ -43,7 +43,9 @@
         <c:choose>
             <c:when test="${empty param['employeeId']}">
                 <input type="hidden" name="departmentId"
-                       value="<c:out value="${not empty employee ? departmentId : param.departmentId}"/>">
+                       value="<c:out value="${not empty employee ? employee.department.id : param.department.id}"/>">
+                <%--   <input type="hidden" name="departmentName"
+                          value="<c:out value="${not empty employee ? employee.department.name : param.department.name}"/>">--%>
             </c:when>
             <c:otherwise>
                 <div class="form-addEmployee">
@@ -51,7 +53,7 @@
                     <select class="form-control" name="departmentId">
                         <c:forEach var="department" items="${departments}">
                             <c:choose>
-                                <c:when test="${department.id == employee.departmentId}">
+                                <c:when test="${department.id == employee.department.id}">
                                     <option selected value="${department.id}">${department.name}</option>
                                 </c:when>
                                 <c:otherwise>
@@ -63,6 +65,7 @@
                 </div>
             </c:otherwise>
         </c:choose>
+        <c:remove var="validationErrors" scope="request"/>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

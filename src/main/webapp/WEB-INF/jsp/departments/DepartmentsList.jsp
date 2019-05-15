@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,7 +40,7 @@
                             <form method="post" action="/deleteDepartment">
                                 <input type="hidden" name="departmentId" value="<c:out value="${department.id}" />">
                                 <input type="submit" value="Delete" class="btn btn-danger"
-                                       onclick="return isSatisfied(${department.count} , this.form)"/>
+                                       onclick="return isSatisfied(${fn:length(department.employeeList)}, this.form)"/>
                             </form>
                         </td>
                     </tr>

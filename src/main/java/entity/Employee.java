@@ -1,14 +1,19 @@
 package entity;
 
 import net.sf.oval.constraint.*;
-import util.validator.oval.employee.EmailCheck;
+import util.oval.employee.EmailCheck;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "employees")
 public class Employee {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @CheckWith(value = EmailCheck.class, message = "Employee with such email already exists")
     @Length(min = 5, max = 45)
@@ -17,19 +22,31 @@ public class Employee {
             "[0-9]{1,3}))(:[0-9]{1,5})?$")
     @NotNull
     @NotEmpty(message = "cannot be empty")
+    @Column(name = "email")
     private String email;
-    @MatchPattern(message = "onqly numbers", pattern = "^\\d*$")
+    @MatchPattern(message = "only numbers", pattern = "(^\\d*$)|(^-?\\d*\\.\\d{2}$)")
     @Min(value = 1, message = "cannot be empty and less or equals than 0")
     @NotNull(message = "only numbers allowed")
     @Length()
+    @Column(name = "salary")
     private BigDecimal salary;
     @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy")
     @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
+    @Column(name = "birth_date")
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
-    @NotNull
-    @NotEmpty
-    private Long departmentId;
+    @ManyToOne
+    @JoinColumn(name = "id_department")
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 
     public String getEmail() {
         return email;
@@ -45,14 +62,6 @@ public class Employee {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Long getId() {
@@ -71,6 +80,9 @@ public class Employee {
         this.birthDate = birthDate;
     }
 
+    public Employee() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,12 +91,22 @@ public class Employee {
         return Objects.equals(getId(), employee.getId()) &&
                 Objects.equals(getEmail(), employee.getEmail()) &&
                 Objects.equals(getSalary(), employee.getSalary()) &&
-                Objects.equals(getBirthDate(), employee.getBirthDate()) &&
-                Objects.equals(getDepartmentId(), employee.getDepartmentId());
+                Objects.equals(getBirthDate(), employee.getBirthDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getSalary(), getBirthDate(), getDepartmentId());
+        return Objects.hash(getId(), getEmail(), getSalary(), getBirthDate());
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", salary=" + salary +
+                ", birthDate=" + birthDate +
+                ", department=" + department +
+                '}';
     }
 }

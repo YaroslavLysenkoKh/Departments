@@ -6,7 +6,7 @@ import exception.ValidationException;
 import extractor.RequestExtractor;
 import extractor.department.DepartmentHttpRequestExtractor;
 import service.departments.DepartmentService;
-import service.impl.DepartmentServiceImpl;
+import service.impl.DepartmentHiberSerivceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class DepartmentAddOrEditCommand implements Command {
     private RequestExtractor<Department> departmentRequestExtractor;
 
     public DepartmentAddOrEditCommand() {
-        this.departmentService = new DepartmentServiceImpl();
+        this.departmentService = new DepartmentHiberSerivceImpl();
         this.departmentRequestExtractor = new DepartmentHttpRequestExtractor();
     }
 

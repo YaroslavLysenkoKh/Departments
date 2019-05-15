@@ -1,11 +1,18 @@
 package entity;
 
-
 import net.sf.oval.constraint.*;
-import util.validator.oval.department.NameCheck;
+import util.oval.department.NameCheck;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "departments")
 public class Department {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @CheckWith(value = NameCheck.class, message = "department with such name already exists")
@@ -13,16 +20,21 @@ public class Department {
     @Length(max = 20, message = "max char length is 20")
     @NotNull
     @NotEmpty(message = "cannot be empty")
+    @Column(name = "name")
     private String name;
 
-    private Integer count;
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private List<Employee> employeeList;
 
-    public Integer getCount() {
-        return count;
+    public Department() {
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     public String getName() {

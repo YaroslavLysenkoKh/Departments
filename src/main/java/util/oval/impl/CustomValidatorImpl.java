@@ -1,11 +1,11 @@
-package util.validator.impl;
+package util.oval.impl;
 
 import exception.ValidationException;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.context.FieldContext;
 import net.sf.oval.context.OValContext;
-import util.validator.CustomValidator;
+import util.oval.CustomValidator;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -26,7 +26,6 @@ public class CustomValidatorImpl implements CustomValidator {
 
     public void validate(Object validateObject) throws ValidationException {
         List<ConstraintViolation> violationList = validator.validate(validateObject);
-
         if (!violationList.isEmpty()) {
             for (ConstraintViolation violation : violationList) {
                 String value = violation.getMessage();

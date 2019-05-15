@@ -1,15 +1,15 @@
-package util.validator.oval.employee;
+package util.oval.employee;
 
 import entity.Employee;
 import net.sf.oval.constraint.CheckWithCheck;
 import service.employee.EmployeeService;
-import service.impl.EmployeeServiceImpl;
+import service.impl.EmployeeHiberServiceImpl;
 
 public class EmailCheck implements CheckWithCheck.SimpleCheck {
     private EmployeeService employeeService;
 
     public EmailCheck() {
-        this.employeeService = new EmployeeServiceImpl();
+        this.employeeService = new EmployeeHiberServiceImpl();
     }
 
     @Override

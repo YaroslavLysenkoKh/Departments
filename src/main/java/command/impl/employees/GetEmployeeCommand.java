@@ -2,9 +2,9 @@ package command.impl.employees;
 
 import command.Command;
 import service.departments.DepartmentService;
-import service.impl.DepartmentServiceImpl;
 import service.employee.EmployeeService;
-import service.impl.EmployeeServiceImpl;
+import service.impl.DepartmentHiberSerivceImpl;
+import service.impl.EmployeeHiberServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +16,8 @@ public class GetEmployeeCommand implements Command {
     private EmployeeService employeeService;
 
     public GetEmployeeCommand() {
-        this.departmentService = new DepartmentServiceImpl();
-        this.employeeService = new EmployeeServiceImpl();
+        this.departmentService = new DepartmentHiberSerivceImpl();
+        this.employeeService = new EmployeeHiberServiceImpl();
     }
 
     @Override
