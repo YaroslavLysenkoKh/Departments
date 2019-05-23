@@ -13,10 +13,11 @@ import java.io.IOException;
 @Component("/departmentEmployees")
 public class EmployeesListCommand implements Command {
 
-    @Autowired
     private EmployeeService employeeService;
 
-    public EmployeesListCommand() {
+    @Autowired
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @Override

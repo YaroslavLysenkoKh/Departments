@@ -7,6 +7,7 @@ import comm.service.employee.EmployeeService;
 import comm.util.oval.CustomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,21 +20,21 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     @Autowired
     private EmployeesDao employeesDao;
 
-    public EmployeeHiberServiceImpl() {
-    }
-
     @Override
+    @Transactional(readOnly = true)
     public Employee getById(Long id) {
         return employeesDao.getById(id);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Employee employee = getById(id);
         employeesDao.delete(employee);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Employee> getAllByDepartmentId(Long id) {
         return employeesDao.getAllByDepartmentId(id);
     }
@@ -53,11 +54,13 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Employee getEmployeeByEmail(String email) {
         return employeesDao.getEmployeeByEmail(email);
     }
 
     @Override
+    @Transactional
     public void addOrUpdate(Employee employee) throws ValidationException {
         validator.validate(employee);
         employeesDao.addOrUpdate(employee);

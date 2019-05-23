@@ -18,9 +18,6 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     @Autowired
     private CustomValidator validator;
 
-    public DepartmentHiberSerivceImpl() {
-    }
-
     @Override
     @Transactional(readOnly = true)
     public List<Department> getAll() {

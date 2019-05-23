@@ -4,9 +4,8 @@ import comm.entity.Department;
 import comm.service.departments.DepartmentService;
 import net.sf.oval.constraint.CheckWithCheck;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class NameCheck implements CheckWithCheck.SimpleCheck {
 
     @Autowired

@@ -3,7 +3,6 @@ package comm.extractor.department;
 import comm.entity.Department;
 import comm.extractor.RequestExtractor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

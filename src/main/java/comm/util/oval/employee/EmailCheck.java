@@ -4,9 +4,8 @@ import comm.entity.Employee;
 import comm.service.employee.EmployeeService;
 import net.sf.oval.constraint.CheckWithCheck;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class EmailCheck implements CheckWithCheck.SimpleCheck {
 
     @Autowired

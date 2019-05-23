@@ -8,13 +8,14 @@ import net.sf.oval.configuration.annotation.AnnotationsConfigurer;
 import net.sf.oval.context.FieldContext;
 import net.sf.oval.context.OValContext;
 import net.sf.oval.integration.spring.SpringCheckInitializationListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @Component
 public class CustomValidatorImpl implements CustomValidator {
@@ -23,10 +24,9 @@ public class CustomValidatorImpl implements CustomValidator {
     private Map<String, List<String>> errorMap;
 
     public CustomValidatorImpl() {
+        this.errorMap = new HashMap();
         AnnotationsConfigurer myConfigurer = new AnnotationsConfigurer();
-
         myConfigurer.addCheckInitializationListener(SpringCheckInitializationListener.INSTANCE);
-
         validator = new Validator(myConfigurer);
     }
 

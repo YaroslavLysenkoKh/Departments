@@ -19,8 +19,8 @@ public class Department {
     @MatchPattern(message = "at least one letter or number must be", pattern = "^[A-Za-z0-9\\\\u0400-\\\\u04FF]{1,}$")
     @Length(max = 20, message = "max char length is 20")
     @NotNull
-    @NotEmpty(message = "cannot be empty")
     @Column(name = "name")
+    @NotEmpty(message = "cannot be empty")
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
