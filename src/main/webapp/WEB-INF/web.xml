@@ -17,7 +17,7 @@
 
     <filter>
         <filter-name>EncodingRequestFilter</filter-name>
-        <filter-class>com.filter.EncodingRequestFilter</filter-class>
+        <filter-class>comm.filter.EncodingRequestFilter</filter-class>
         <init-param>
             <param-name>encodingRequest</param-name>
             <param-value>UTF-8</param-value>
