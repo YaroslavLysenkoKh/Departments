@@ -22,19 +22,19 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Department> getAll() {
         return departmentGenericDao.getAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Department getById(Long id) {
         return departmentGenericDao.getById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Department getByName(String name) {
         return departmentGenericDao.getByName(name);
     }

@@ -17,6 +17,10 @@ public class DepartmentHiberDaoImpl implements DepartmentsDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
 
     @Override
     public Department getByName(String name) {
@@ -30,15 +34,15 @@ public class DepartmentHiberDaoImpl implements DepartmentsDao {
     @Override
     public List<Department> getAll() {
         List departmentList;
-        try (Session session = sessionFactory.getCurrentSession()) {
-            departmentList = session.createQuery("from Department ", Department.class).list();
-            for (Department department : (List<Department>) departmentList) {
-                department.setEmployeeList((List<Employee>) session.createQuery("From Employee " +
-                        "where department.id=:id_department").setParameter("id_department", department.getId()).list());
-            }
+        Session session = sessionFactory.getCurrentSession();
+        departmentList = session.createQuery("from Department ", Department.class).list();
+        for (Department department : (List<Department>) departmentList) {
+            department.setEmployeeList((List<Employee>) session.createQuery("From Employee " +
+                    "where department.id=:id_department").setParameter("id_department", department.getId()).list());
         }
         return departmentList;
     }
+
 
     @Override
     public Department getById(Long id) {

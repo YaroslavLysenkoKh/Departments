@@ -6,7 +6,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter
 public class EncodingRequestFilter implements Filter {
 
     private String encoding;
