@@ -7,6 +7,8 @@ import comm.service.employee.EmployeeService;
 import comm.util.oval.CustomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,20 +23,20 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     private EmployeesDao employeesDao;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Employee getById(Long id) {
         return employeesDao.getById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void deleteById(Long id) {
         Employee employee = getById(id);
         employeesDao.delete(employee);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Employee> getAllByDepartmentId(Long id) {
         return employeesDao.getAllByDepartmentId(id);
     }
@@ -54,13 +56,13 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Employee getEmployeeByEmail(String email) {
         return employeesDao.getEmployeeByEmail(email);
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addOrUpdate(Employee employee) throws ValidationException {
         validator.validate(employee);
         employeesDao.addOrUpdate(employee);

@@ -7,6 +7,8 @@ import comm.service.departments.DepartmentService;
 import comm.util.oval.CustomValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,25 +21,25 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     private CustomValidator validator;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Department> getAll() {
         return departmentGenericDao.getAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Department getById(Long id) {
         return departmentGenericDao.getById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Department getByName(String name) {
         return departmentGenericDao.getByName(name);
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     public void deleteById(Long id) {
         Department department = getById(id);
         departmentGenericDao.delete(department);
@@ -45,19 +47,16 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
 
     @Override
     public boolean checkDepartmentExistenceByName(Department department) {
-        List<Department> tmpDepartments = getAll();
-        for (Department department1 : tmpDepartments) {
-            if (department.getId() != null) {
-                return department1.getName().equals(department.getName()) && department1.getId() == department.getId() ? false : true;
-            } else {
-                return department1.getName().equals(department.getName()) ? false : true;
-            }
+        Department tmpDepartment = getByName(department.getName());
+        if (department.getId() != null) {
+            return tmpDepartment.getName().equals(department.getName()) && tmpDepartment.getId() == department.getId() ? false : true;
+        } else {
+            return tmpDepartment.getName().equals(department.getName()) ? true : false;
         }
-        return false;
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addOrUpdate(Department department) throws ValidationException {
         validator.validate(department);
         departmentGenericDao.addOrUpdate(department);

@@ -8,7 +8,6 @@ import net.sf.oval.configuration.annotation.AnnotationsConfigurer;
 import net.sf.oval.context.FieldContext;
 import net.sf.oval.context.OValContext;
 import net.sf.oval.integration.spring.SpringCheckInitializationListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -47,10 +46,8 @@ public class CustomValidatorImpl implements CustomValidator {
                         errorMap.get(key).add(value);
                     }
                 }
-
             }
             throw new ValidationException(errorMap);
         }
-
     }
 }
