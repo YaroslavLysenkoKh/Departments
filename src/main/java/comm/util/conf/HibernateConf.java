@@ -1,4 +1,4 @@
-package comm.util.hibernate;
+package comm.util.conf;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package comm.util.spring;
 
-import comm.command.Controller;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
@@ -15,18 +15,19 @@ public class WebInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-//        ctx.register(ApplicationConfiguration.class);
         ctx.scan("comm", "net.sf");
+        ctx.setConfigLocation("comm/util/conf");
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         //create dispatcher context
         AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-        ServletRegistration.Dynamic dispatcherServlet = servletContext.addServlet("dispatcher", new Controller(dispatcherContext));
+        ServletRegistration.Dynamic dispatcherServlet =
+                servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
         dispatcherServlet.setLoadOnStartup(1);
         dispatcherServlet.addMapping("/");
 
         //register filters
-        FilterRegistration.Dynamic filterRegistration = servletContext.addFilter("endcodingFilter", new CharacterEncodingFilter());
+        FilterRegistration.Dynamic filterRegistration = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
         filterRegistration.setInitParameter("encoding", "UTF-8");
         filterRegistration.setInitParameter("forceEncoding", "true");
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
