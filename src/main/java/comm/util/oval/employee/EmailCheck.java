@@ -15,10 +15,6 @@ public class EmailCheck implements CheckWithCheck.SimpleCheck {
     @Override
     public boolean isSatisfied(Object validatedObject, Object value) {
         Employee employee = (Employee) validatedObject;
-        if (employee.getEmail().isEmpty())
-            return false;
-        if (employeeService.checkEmployeeExistenceByEmail(((Employee) validatedObject)))
-            return false;
-        return true;
+        return employee.getEmail().isEmpty() || (employeeService.checkEmployeeExistenceByEmail(employee));
     }
 }

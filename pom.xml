@@ -94,6 +94,13 @@
             <artifactId>spring-web</artifactId>
             <version>5.1.7.RELEASE</version>
         </dependency>
+        <!-- spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -14,10 +14,6 @@ public class NameCheck implements CheckWithCheck.SimpleCheck {
     @Override
     public boolean isSatisfied(Object validatedObject, Object value) {
         Department department = (Department) validatedObject;
-        if (department.getName().isEmpty())
-            return false;
-        if (departmentService.checkDepartmentExistenceByName(department))
-            return false;
-        return true;
+        return department.getName().isEmpty() || (departmentService.checkDepartmentExistenceByName(department));
     }
 }
