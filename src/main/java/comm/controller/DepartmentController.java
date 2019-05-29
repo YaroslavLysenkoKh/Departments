@@ -1,12 +1,12 @@
 package comm.controller;
 
+import comm.entity.Department;
+import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 
@@ -26,5 +26,31 @@ public class DepartmentController extends HttpServlet {
         Long lId = Long.parseLong(id);
         departmentService.deleteById(lId);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+    public String addOrEdit(@ModelAttribute("department") Department department, Model model) {
+        try {
+            departmentService.addOrUpdate(department);
+        } catch (ValidationException e) {
+            model.addAttribute("validationErrors", e);
+            return "EditDepartment";
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/getToEditDepartment/{departmentId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getToEdit(@PathVariable String departmentId, Model model) {
+        if (departmentId != null && !departmentId.isEmpty()) {
+            model.addAttribute("department", departmentService.getById(Long.parseLong(departmentId)));
+        }
+        return "EditDepartment";
+    }
+
+    @RequestMapping("/depForm")
+    public String showForm(Model model) {
+        model.addAttribute("department", new Department());
+        return "EditDepartment";
     }
 }

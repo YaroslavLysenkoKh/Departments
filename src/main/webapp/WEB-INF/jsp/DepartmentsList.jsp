@@ -12,7 +12,7 @@
 <body>
 <div class="container ">
     <p>
-        <a href="getToEditDepartment" class="btn btn-primary" role="button">Add Department</a>
+        <a href="depForm" class="btn btn-primary" role="button">Add Department</a>
     </p>
     <table class="table text-center" border="1">
         <thead class="thead-dark">
@@ -33,7 +33,7 @@
                                class="btn btn-success" role="button">Employee List</a>
                         </td>
                         <td>
-                            <a href="getToEditDepartment?departmentId=<c:out value="${department.id}"/>"
+                            <a href="getToEditDepartment/<c:out value="${department.id}"/>"
                                class="btn btn-warning" role="button">Edit</a>
                         </td>
                         <td>
