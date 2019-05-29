@@ -29,7 +29,7 @@
                     <tr>
                         <td><c:out value="${department.name}"></c:out></td>
                         <td>
-                            <a href="departmentEmployees?departmentId=<c:out value="${department.id}"/>"
+                            <a href="departmentEmployees/<c:out value="${department.id}"/>"
                                class="btn btn-success" role="button">Employee List</a>
                         </td>
                         <td>
