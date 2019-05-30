@@ -14,7 +14,7 @@
 </div>
 <div class="container">
     <p>
-        <a href="getToEditEmployee?departmentId=<c:out value="${departmentId}" />" class="btn btn-primary"
+        <a href="empForm/<c:out value="${departmentId}" />" class="btn btn-primary"
            role="button">Add
             Employee</a>
     </p>
@@ -38,7 +38,7 @@
                         <td>${employee.salary}</td>
                         <td>${employee.birthDate}</td>
                         <td>
-                            <a href="getToEditEmployee?employeeId=<c:out value="${employee.id}"/>"
+                            <a href="getToEditEmployee/<c:out value="${employee.id}"/>"
                                class="btn btn-success" role="button">Edit</a>
                         </td>
                         <td>

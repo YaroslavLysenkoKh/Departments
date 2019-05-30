@@ -13,7 +13,7 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long departmentId;
 
     @CheckWith(value = NameCheck.class, message = "department with such name already exists")
     @MatchPattern(message = "at least one letter or number must be", pattern = "^[A-Za-z0-9\\\\u0400-\\\\u04FF]{1,}$")
@@ -46,18 +46,18 @@ public class Department {
     }
 
     public Long getId() {
-        return id;
+        return departmentId;
     }
 
     @Override
     public String toString() {
         return "Department{" +
-                "id=" + id +
+                "id=" + departmentId +
                 ", name='" + name + '\'' +
                 '}';
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.departmentId = id;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
 
@@ -16,9 +17,8 @@ public class DepartmentController extends HttpServlet {
     private DepartmentService departmentService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getDepartments(Model model) {
-        model.addAttribute("departments", departmentService.getAll());
-        return "DepartmentsList";
+    public ModelAndView main() {
+        return new ModelAndView("DepartmentsList", "departments", departmentService.getAll());
     }
 
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
@@ -29,7 +29,7 @@ public class DepartmentController extends HttpServlet {
     }
 
     @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
-    public String addOrEdit(@ModelAttribute("department") Department department, Model model) {
+    public String addOrUpdate(@ModelAttribute("department") Department department, Model model) {
         try {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
@@ -40,17 +40,17 @@ public class DepartmentController extends HttpServlet {
     }
 
     @RequestMapping(value = "/getToEditDepartment/{departmentId}", method = RequestMethod.GET)
-    @ResponseBody
     public String getToEdit(@PathVariable String departmentId, Model model) {
         if (departmentId != null && !departmentId.isEmpty()) {
             model.addAttribute("department", departmentService.getById(Long.parseLong(departmentId)));
+        } else {
+            return "ErrorPage";
         }
         return "EditDepartment";
     }
 
     @RequestMapping("/depForm")
-    public String showForm(Model model) {
-        model.addAttribute("department", new Department());
-        return "EditDepartment";
+    public ModelAndView showForm() {
+        return new ModelAndView("EditDepartment", "department", new Department());
     }
 }

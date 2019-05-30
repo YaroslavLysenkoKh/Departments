@@ -14,7 +14,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long employeeId;
     @CheckWith(value = EmailCheck.class, message = "Employee with such email already exists")
     @Length(min = 5, max = 45)
     @MatchPattern(message = "mail must be like this: email.kh@department.com", pattern = "^[-a-z0-9~!$%^&*_=+}{\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\'?]+)*@([a-z0-9_][-a-z0-9_]*(\\.[-a-z0-9_]+)*\\." +
@@ -65,11 +65,11 @@ public class Employee {
     }
 
     public Long getId() {
-        return id;
+        return employeeId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.employeeId = id;
     }
 
     public Date getBirthDate() {
@@ -102,7 +102,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+                "id=" + employeeId +
                 ", email='" + email + '\'' +
                 ", salary=" + salary +
                 ", birthDate=" + birthDate +

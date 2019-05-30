@@ -15,7 +15,6 @@
 </div>
 <div class="align-content-center">
     <H1>ops... Something went wrong</H1>
-    ${exception}
 </div>
 </body>
 </html>

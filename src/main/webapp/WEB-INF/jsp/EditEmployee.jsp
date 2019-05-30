@@ -43,9 +43,7 @@
         <c:choose>
             <c:when test="${empty param['employeeId']}">
                 <input type="hidden" name="departmentId"
-                       value="<c:out value="${not empty employee ? employee.department.id : param.department.id}"/>">
-                <%--   <input type="hidden" name="departmentName"
-                          value="<c:out value="${not empty employee ? employee.department.name : param.department.name}"/>">--%>
+                       value="<c:out value="${not empty employee ? departmentId : param.departmentId}"/>">
             </c:when>
             <c:otherwise>
                 <div class="form-addEmployee">
