@@ -8,11 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Component
 public class EmployeeConverter implements DtoConverter<EmployeeDto, Employee> {
     @Autowired
@@ -26,18 +21,7 @@ public class EmployeeConverter implements DtoConverter<EmployeeDto, Employee> {
         employee.setEmail(model.getEmail());
         employee.setDepartment(departmentService.getById(model.getDepartmentId()));
         employee.setSalary(model.getSalary());
-        setEmployeeDate(employee, model);
+        employee.setBirthDate(model.getBirthDate());
         return employee;
-    }
-
-    private void setEmployeeDate(Employee employee, EmployeeDto dto) {
-        try {
-            DateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date newDate = targetFormat.parse(targetFormat.format(new SimpleDateFormat("yyyy-MM-dd").
-                    parse(dto.getBirthDate())));
-            employee.setBirthDate(newDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 }

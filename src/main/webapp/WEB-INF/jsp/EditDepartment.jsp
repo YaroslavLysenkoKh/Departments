@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <link rel='stylesheet' href='webjars/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css'>
     <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -16,7 +16,7 @@
                    value="<c:out value="${not empty department ? department.name : param.name}"/>"
                    placeholder="Enter name">
             <small class="text-danger">
-                <c:out value="${validationErrors['name']}"/>
+                <c:out value="${validationErrors.errorMap.name}"/>
             </small>
             <c:remove var="validationErrors" scope="request"/>
         </div>

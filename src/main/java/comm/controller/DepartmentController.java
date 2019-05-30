@@ -1,8 +1,10 @@
 package comm.controller;
 
+import comm.dto.DepartmentDto;
 import comm.entity.Department;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
+import comm.util.converter.DtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 public class DepartmentController extends HttpServlet {
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private DtoConverter<DepartmentDto, Department> dtoConverter;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
@@ -29,7 +33,8 @@ public class DepartmentController extends HttpServlet {
     }
 
     @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
-    public String addOrUpdate(@ModelAttribute("department") Department department, Model model) {
+    public String addOrUpdate(@ModelAttribute("department") DepartmentDto departmentDto, Model model) {
+        Department department = dtoConverter.convert(departmentDto);
         try {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
