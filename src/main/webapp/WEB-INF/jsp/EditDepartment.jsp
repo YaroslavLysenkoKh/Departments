@@ -6,17 +6,18 @@
     <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<% System.out.println(request.getParameter("department")); %>
 <div class="container">
     <form action="/addDepartment" method="post">
         <div class="form-addDepartment">
             <input type="text" name="departmentId"
-                   value="<c:out value="${not empty department ? department.id : param.id}"/>">
+                   value="<c:out value="${not empty department ? department.id : param.id }"/>">
             <label>Department Name</label>
             <input type="text" class="form-control" name="name"
                    value="<c:out value="${not empty department ? department.name : param.name}"/>"
                    placeholder="Enter name">
             <small class="text-danger">
-                <c:out value="${validationErrors.errorMap.name}"/>
+                <c:out value="${validationErrors.errorMap['name']}"/>
             </small>
             <c:remove var="validationErrors" scope="request"/>
         </div>

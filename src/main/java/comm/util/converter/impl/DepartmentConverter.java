@@ -4,7 +4,9 @@ import comm.dto.DepartmentDto;
 import comm.entity.Department;
 import comm.util.converter.DtoConverter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DepartmentConverter implements DtoConverter<DepartmentDto, Department> {
     @Override
     public Department convert(DepartmentDto model) {

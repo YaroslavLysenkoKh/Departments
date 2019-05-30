@@ -19,7 +19,7 @@
                    value="<c:out value="${not empty employee ? employee.email : param.email}"/>"
                    placeholder="Enter email">
             <small class="text-danger">
-                <c:out value="${validationErrors['email']}"/>
+                <c:out value="${validationErrors.errorMap['email']}"/>
             </small>
         </div>
         <div class="form-addEmployee">

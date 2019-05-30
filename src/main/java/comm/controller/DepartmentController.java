@@ -39,6 +39,7 @@ public class DepartmentController extends HttpServlet {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
             model.addAttribute("validationErrors", e);
+            model.addAttribute("department", new Department());
             return "EditDepartment";
         }
         return "redirect:/";

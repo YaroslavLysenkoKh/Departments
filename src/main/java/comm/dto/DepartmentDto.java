@@ -2,16 +2,16 @@ package comm.dto;
 
 public class DepartmentDto {
 
-    private String departmentId;
+    private String id;
 
     private String name;
 
     public String getDepartmentId() {
-        return departmentId;
+        return id;
     }
 
     public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+        this.id = departmentId;
     }
 
     public String getName() {
