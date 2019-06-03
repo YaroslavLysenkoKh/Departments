@@ -10,7 +10,7 @@
 <div class="container">
     <form action="/addEmployee" method="post">
         <div class=" form-addEmployee">
-            <input type="hidden" name="employeeId"
+            <input type="hidden" name="id"
                    value="<c:out value="${param['employeeId'] eq null ? employee.id : param['employeeId']}"/>" readonly>
         </div>
         <div class=" form-addEmployee">
@@ -28,7 +28,7 @@
                    value="<c:out value="${not empty employee ? employee.salary : param.salary}"/>"
                    placeholder="Salary" name="salary">
             <small class="text-danger">
-                <c:out value="${validationErrors['salary']}"/>
+                <c:out value="${validationErrors.errorMap['salary']}"/>
             </small>
         </div>
         <div class="form-addEmployee">
@@ -37,7 +37,7 @@
                    value="<c:out value="${not empty employee ? employee.birthDate : param.birthDate}"/>"
                    placeholder="BirthDate" name="birthDate">
             <small class="text-danger">
-                <c:out value="${validationErrors['birthDate']}"/>
+                <c:out value="${validationErrors.errorMap['birthDate']}"/>
             </small>
         </div>
         <c:choose>

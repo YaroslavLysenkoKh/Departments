@@ -19,7 +19,7 @@ public class EmployeeConverter implements DtoConverter<EmployeeDto, Employee> {
         if (!StringUtils.isEmpty(model.getId()))
             employee.setId(Long.parseLong(model.getId()));
         employee.setEmail(model.getEmail());
-        employee.setDepartment(departmentService.getById(model.getDepartmentId()));
+//        employee.setDepartment(departmentService.getById(model.getDepartmentId()));
         employee.setSalary(model.getSalary());
         employee.setBirthDate(model.getBirthDate());
         return employee;

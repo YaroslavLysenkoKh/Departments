@@ -5,7 +5,7 @@ import net.sf.oval.constraint.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +14,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long employeeId;
+    private Long id;
     @CheckWith(value = EmailCheck.class, message = "Employee with such email already exists")
     @Length(min = 5, max = 45)
     @MatchPattern(message = "mail must be like this: email.kh@department.com", pattern = "^[-a-z0-9~!$%^&*_=+}{\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\'?]+)*@([a-z0-9_][-a-z0-9_]*(\\.[-a-z0-9_]+)*\\." +
@@ -34,7 +34,7 @@ public class Employee {
     @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
     @Column(name = "birth_date")
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @ManyToOne
     @JoinColumn(name = "id_department")
@@ -65,11 +65,11 @@ public class Employee {
     }
 
     public Long getId() {
-        return employeeId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.employeeId = id;
+        this.id = id;
     }
 
     public Date getBirthDate() {
@@ -102,7 +102,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + employeeId +
+                "id=" + id +
                 ", email='" + email + '\'' +
                 ", salary=" + salary +
                 ", birthDate=" + birthDate +

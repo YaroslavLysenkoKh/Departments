@@ -2,12 +2,12 @@ package comm.service.impl;
 
 import comm.dao.employees.EmployeesDao;
 import comm.entity.Employee;
+import comm.exception.IdException;
 import comm.exception.ValidationException;
+import comm.service.departments.DepartmentService;
 import comm.service.employee.EmployeeService;
 import comm.util.oval.CustomValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,28 +16,38 @@ import java.util.List;
 @Service
 public class EmployeeHiberServiceImpl implements EmployeeService {
 
-    @Autowired
-    private CustomValidator validator;
+    private final CustomValidator validator;
+    private final EmployeesDao employeesDao;
+    private final DepartmentService departmentService;
 
-    @Autowired
-    private EmployeesDao employeesDao;
+    public EmployeeHiberServiceImpl(CustomValidator validator, EmployeesDao employeesDao, DepartmentService departmentService) {
+        this.validator = validator;
+        this.employeesDao = employeesDao;
+        this.departmentService = departmentService;
+    }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Employee getById(Long id) {
         return employeesDao.getById(id);
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) throws IdException {
+        if (id == null) {
+            throw new IdException();
+        }
         Employee employee = getById(id);
         employeesDao.delete(employee);
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
-    public List<Employee> getAllByDepartmentId(Long id) {
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Employee> getAllByDepartmentId(Long id) throws IdException {
+        if (id == null) {
+            throw new IdException();
+        }
         return employeesDao.getAllByDepartmentId(id);
     }
 
@@ -48,14 +58,18 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Employee getEmployeeByEmail(String email) {
         return employeesDao.getEmployeeByEmail(email);
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void addOrUpdate(Employee employee) throws ValidationException {
+    @Transactional
+    public void addOrUpdate(Employee employee, Long departmentId) throws ValidationException, IdException {
+        if (departmentId == null) {
+            throw new IdException();
+        }
+        employee.setDepartment(departmentService.getById(departmentId));
         validator.validate(employee);
         employeesDao.addOrUpdate(employee);
     }

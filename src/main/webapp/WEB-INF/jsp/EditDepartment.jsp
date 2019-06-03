@@ -10,7 +10,7 @@
 <div class="container">
     <form action="/addDepartment" method="post">
         <div class="form-addDepartment">
-            <input type="text" name="departmentId"
+            <input type="hidden" name="id"
                    value="<c:out value="${not empty department ? department.id : param.id }"/>">
             <label>Department Name</label>
             <input type="text" class="form-control" name="name"

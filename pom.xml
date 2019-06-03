@@ -100,6 +100,13 @@
             <artifactId>spring-webmvc</artifactId>
             <version>5.1.7.RELEASE</version>
         </dependency>
+        <!-- jquery -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
 
     </dependencies>
 

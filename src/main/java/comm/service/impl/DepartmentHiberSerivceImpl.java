@@ -2,11 +2,11 @@ package comm.service.impl;
 
 import comm.dao.departments.DepartmentsDao;
 import comm.entity.Department;
+import comm.exception.IdException;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.util.oval.CustomValidator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class DepartmentHiberSerivceImpl implements DepartmentService {
+
     private final DepartmentsDao departmentGenericDao;
     private final CustomValidator validator;
 
@@ -23,26 +24,32 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
+    @Transactional
     public List<Department> getAll() {
         return departmentGenericDao.getAll();
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
-    public Department getById(Long id) {
+    @Transactional
+    public Department getById(Long id) throws IdException {
+        if (id == null) {
+            throw new IdException();
+        }
         return departmentGenericDao.getById(id);
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, isolation = Isolation.SERIALIZABLE)
+    @Transactional
     public Department getByName(String name) {
         return departmentGenericDao.getByName(name);
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) throws IdException {
+        if (id == null) {
+            throw new IdException();
+        }
         Department department = getById(id);
         departmentGenericDao.delete(department);
     }
@@ -54,7 +61,7 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     public void addOrUpdate(Department department) throws ValidationException {
         validator.validate(department);
         departmentGenericDao.addOrUpdate(department);

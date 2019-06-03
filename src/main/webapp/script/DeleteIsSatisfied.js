@@ -8,3 +8,13 @@ function isSatisfied(count, form) {
         form.submit();
     }
 }
+
+function doEmployeeCheck() {
+    $.ajax({
+        url: "",
+        data: ""
+
+
+    })
+
+}

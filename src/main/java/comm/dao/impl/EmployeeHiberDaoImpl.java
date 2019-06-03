@@ -13,17 +13,17 @@ import java.util.List;
 public class EmployeeHiberDaoImpl implements EmployeesDao {
 
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
+    public EmployeeHiberDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
+
 
     @Override
     public List<Employee> getAllByDepartmentId(Long id) {
         List employeeList;
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.getCurrentSession()) {
             employeeList = session.createQuery("from Employee where department.id =:id").setParameter("id", id).list();
         }
         return employeeList;
@@ -32,8 +32,8 @@ public class EmployeeHiberDaoImpl implements EmployeesDao {
     @Override
     public Employee getEmployeeByEmail(String email) {
         Employee employee;
-        try (Session session = getSession()) {
-            employee = (Employee) session.createQuery("from Employee e where e.email =:email").setParameter("email", email).list().get(0);
+        try (Session session = sessionFactory.getCurrentSession()) {
+            employee = (Employee) session.createQuery("from Employee e where e.email =:email").setParameter("email", email).uniqueResult();
         }
         return employee;
     }
@@ -47,7 +47,7 @@ public class EmployeeHiberDaoImpl implements EmployeesDao {
     @Override
     public Employee getById(Long id) {
         Employee employee;
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.getCurrentSession()) {
             employee = session.get(Employee.class, id);
         }
         return employee;
@@ -55,7 +55,7 @@ public class EmployeeHiberDaoImpl implements EmployeesDao {
 
     @Override
     public void delete(Employee employee) {
-        Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         if (employee != null) {
             session.delete(employee);
         }
@@ -63,7 +63,7 @@ public class EmployeeHiberDaoImpl implements EmployeesDao {
 
     @Override
     public void addOrUpdate(Employee employee) {
-        Session session = getSession();
+        Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(employee);
     }
 }
