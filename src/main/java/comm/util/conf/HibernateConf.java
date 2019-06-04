@@ -1,5 +1,6 @@
 package comm.util.conf;
 
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -25,12 +25,15 @@ public class HibernateConf {
     private Environment environment;
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[]{"comm/entity"});
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
+    public SessionFactory sessionFactory() {
+        LocalSessionFactoryBuilder sessionFactory = new LocalSessionFactoryBuilder(dataSource());
+        sessionFactory.scanPackages(new String[]{"comm/entity"});
+        sessionFactory.setProperty(AvailableSettings.DIALECT, environment.getRequiredProperty("hibernate.dialect"));
+        sessionFactory.setProperty(AvailableSettings.SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
+        sessionFactory.setProperty(AvailableSettings.FORMAT_SQL, environment.getRequiredProperty("hibernate.format_sql"));
+        sessionFactory.setProperty(AvailableSettings.HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        sessionFactory.setProperty(AvailableSettings.AUTO_CLOSE_SESSION, environment.getRequiredProperty("hibernate.transaction.auto_close_session"));
+        return sessionFactory.buildSessionFactory();
     }
 
     @Bean
@@ -43,20 +46,10 @@ public class HibernateConf {
         return dataSource;
     }
 
-
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put(AvailableSettings.DIALECT, environment.getRequiredProperty("hibernate.dialect"));
-        properties.put(AvailableSettings.SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
-        properties.put(AvailableSettings.FORMAT_SQL, environment.getRequiredProperty("hibernate.format_sql"));
-        properties.put(AvailableSettings.HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        return properties;
-    }
-
     @Bean
     public HibernateTransactionManager getTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
+        transactionManager.setSessionFactory(sessionFactory());
         return transactionManager;
     }
 }

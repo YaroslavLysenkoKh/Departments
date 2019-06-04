@@ -4,6 +4,7 @@ import comm.dao.employees.EmployeesDao;
 import comm.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,6 @@ public class EmployeeHiberDaoImpl implements EmployeesDao {
     public EmployeeHiberDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
 
     @Override
     public List<Employee> getAllByDepartmentId(Long id) {

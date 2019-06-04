@@ -7,7 +7,6 @@ import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.util.oval.CustomValidator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

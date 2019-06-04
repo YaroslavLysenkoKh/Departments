@@ -16,7 +16,7 @@ public class WebInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.scan("comm", "net.sf");
-        ctx.setConfigLocation("comm/util/conf");
+        ctx.setConfigLocation("comm/util");
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         //create dispatcher context

@@ -34,7 +34,6 @@ public class Employee {
     @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
     @Column(name = "birth_date")
-//    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @ManyToOne
     @JoinColumn(name = "id_department")
