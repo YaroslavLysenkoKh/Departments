@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,9 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Employee getById(Long id) {
+        if (id == null) {
+            return new Employee();
+        }
         return employeesDao.getById(id);
     }
 
@@ -45,9 +49,9 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-    public List<Employee> getAllByDepartmentId(Long id) throws IdException {
+    public List<Employee> getAllByDepartmentId(Long id) {
         if (id == null) {
-            throw new IdException();
+            return new ArrayList();
         }
         return employeesDao.getAllByDepartmentId(id);
     }
@@ -65,7 +69,7 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public void addOrUpdate(Employee employee, Long departmentId) throws IdException, ValidationException {
         if (departmentId == null) {
             throw new IdException();

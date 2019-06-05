@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     void deleteById(Long id) throws IdException;
 
-    List<Employee> getAllByDepartmentId(Long id) throws IdException;
+    List<Employee> getAllByDepartmentId(Long id);
 
     boolean checkEmployeeExistenceByEmail(Employee employee);
 

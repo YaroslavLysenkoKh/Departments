@@ -8,7 +8,7 @@
 <body>
 <% System.out.println(request.getParameter("department")); %>
 <div class="container">
-    <form action="/addDepartment" method="post">
+    <form action="/department/add" method="post">
         <div class="form-addDepartment">
             <input type="hidden" name="id"
                    value="<c:out value="${not empty department ? department.id : param.id }"/>">

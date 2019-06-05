@@ -44,20 +44,13 @@ public class DepartmentController extends HttpServlet {
             model.addAttribute("validationErrors", e);
             model.addAttribute("department", new Department());
             return "EditDepartment";
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return "redirect:/";
     }
 
     @RequestMapping(value = "/department/{departmentId}", method = RequestMethod.GET)
     public String getToEdit(@PathVariable Long departmentId, Model model) {
-        try {
-            model.addAttribute("department", departmentService.getById(departmentId));
-        } catch (IdException e) {
-            model.addAttribute("message", e.getMessage());
-            return "ErrorPage";
-        }
+        model.addAttribute("department", departmentService.getById(departmentId));
         return "EditDepartment";
     }
 

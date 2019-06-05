@@ -31,9 +31,9 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-    public Department getById(Long id) throws IdException {
+    public Department getById(Long id) {
         if (id == null) {
-            throw new IdException();
+            return new Department();
         }
         return departmentGenericDao.getById(id);
     }
@@ -61,9 +61,10 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public void addOrUpdate(Department department) throws ValidationException {
         validator.validate(department);
         departmentGenericDao.addOrUpdate(department);
+        throw new RuntimeException("edit exception");
     }
 }

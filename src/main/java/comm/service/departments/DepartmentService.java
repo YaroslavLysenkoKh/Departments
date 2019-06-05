@@ -10,7 +10,7 @@ public interface DepartmentService {
 
     List<Department> getAll();
 
-    Department getById(Long id) throws IdException;
+    Department getById(Long id) ;
 
     Department getByName(String name);
 

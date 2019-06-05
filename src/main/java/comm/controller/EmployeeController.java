@@ -1,12 +1,10 @@
 package comm.controller;
 
-import comm.dto.EmployeeDto;
 import comm.entity.Employee;
 import comm.exception.IdException;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.service.employee.EmployeeService;
-import comm.util.converter.DtoConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,24 +16,16 @@ public class EmployeeController extends HttpServlet {
 
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
-    private final DtoConverter<EmployeeDto, Employee> employeeDtoConverter;
 
-    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService, DtoConverter<EmployeeDto, Employee> employeeDtoConverter) {
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
-        this.employeeDtoConverter = employeeDtoConverter;
     }
 
     @RequestMapping(value = "/employee/{departmentId}", method = RequestMethod.GET)
     public String getEmployees(@PathVariable Long departmentId, Model model) {
-        try {
-            model.addAttribute("employees", employeeService.getAllByDepartmentId(departmentId));
-            model.addAttribute("departmentId", departmentId);
-        } catch (IdException e) {
-            model.addAttribute("message", e.getMessage());
-            return "ErrorPage";
-        }
-
+        model.addAttribute("employees", employeeService.getAllByDepartmentId(departmentId));
+        model.addAttribute("departmentId", departmentId);
         return "EmployeesList";
     }
 
@@ -47,7 +37,7 @@ public class EmployeeController extends HttpServlet {
             model.addAttribute("message", e.getMessage());
             return "ErrorPage";
         }
-        return "redirect:/departmentEmployees/" + departmentId;
+        return "redirect:/employee/" + departmentId;
     }
 
     @RequestMapping(value = "/employee/form/{departmentId}", method = RequestMethod.GET)
@@ -59,12 +49,7 @@ public class EmployeeController extends HttpServlet {
 
     @RequestMapping(value = "/employee/edit/{employeeId}", method = RequestMethod.GET)
     public String getToEdit(@PathVariable Long employeeId, Model model) {
-        try {
-            model.addAttribute("department", departmentService.getById(employeeId));
-        } catch (IdException e) {
-            model.addAttribute("message", e.getMessage());
-            return "ErrorPage";
-        }
+        model.addAttribute("department", departmentService.getById(employeeId));
         return "EditEmployee";
     }
 
@@ -78,10 +63,8 @@ public class EmployeeController extends HttpServlet {
         } catch (IdException e) {
             model.addAttribute("message", e.getMessage());
             return "ErrorPage";
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return "redirect:/departmentEmployees/" + departmentId;
+        return "redirect:/employee/" + departmentId;
     }
 
 
