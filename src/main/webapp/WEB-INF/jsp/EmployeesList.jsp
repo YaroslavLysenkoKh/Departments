@@ -37,6 +37,7 @@
                         <td>${employee.email}</td>
                         <td>${employee.salary}</td>
                         <td>${employee.birthDate}</td>
+                        </td>
                         <td>
                             <a href="edit/<c:out value="${employee.id}"/>"
                                class="btn btn-success" role="button">Edit</a>

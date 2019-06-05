@@ -5,11 +5,17 @@ import comm.exception.IdException;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.service.employee.EmployeeService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.DataBinder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class EmployeeController extends HttpServlet {
@@ -21,6 +27,14 @@ public class EmployeeController extends HttpServlet {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
     }
+
+//    @InitBinder
+//    public void customBinding(WebDataBinder binder) {
+//        // tell spring to set empty values as null instead of empty string.
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        dateFormat.setLenient(false);
+//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+//    }
 
     @RequestMapping(value = "/employee/{departmentId}", method = RequestMethod.GET)
     public String getEmployees(@PathVariable Long departmentId, Model model) {
