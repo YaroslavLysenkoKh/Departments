@@ -4,8 +4,6 @@ function isSatisfied(count, form) {
             'Do yo want to delete this department anyway?')) {
             form.submit();
         }
-    } else {
-        form.submit();
     }
 }
 

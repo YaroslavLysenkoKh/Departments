@@ -26,7 +26,7 @@ public class EmployeeController extends HttpServlet {
         this.employeeDtoConverter = employeeDtoConverter;
     }
 
-    @RequestMapping(value = "/departmentEmployees/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/{departmentId}", method = RequestMethod.GET)
     public String getEmployees(@PathVariable Long departmentId, Model model) {
         try {
             model.addAttribute("employees", employeeService.getAllByDepartmentId(departmentId));
@@ -39,7 +39,7 @@ public class EmployeeController extends HttpServlet {
         return "EmployeesList";
     }
 
-    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "/employee/delete", method = RequestMethod.POST)
     public String deleteEmployee(@RequestParam Long employeeId, @RequestParam String departmentId, Model model) {
         try {
             employeeService.deleteById(employeeId);
@@ -50,14 +50,14 @@ public class EmployeeController extends HttpServlet {
         return "redirect:/departmentEmployees/" + departmentId;
     }
 
-    @RequestMapping(value = "/departmentEmployees/empForm/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/form/{departmentId}", method = RequestMethod.GET)
     public String showForm(@PathVariable String departmentId, Model model) {
         model.addAttribute("departmentId", departmentId);
         model.addAttribute("employee", new Employee());
         return "EditEmployee";
     }
 
-    @RequestMapping(value = "/departmentEmployees/getToEditEmployee/{employeeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/edit/{employeeId}", method = RequestMethod.GET)
     public String getToEdit(@PathVariable Long employeeId, Model model) {
         try {
             model.addAttribute("department", departmentService.getById(employeeId));
@@ -68,7 +68,7 @@ public class EmployeeController extends HttpServlet {
         return "EditEmployee";
     }
 
-    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "/employee/add", method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute Employee employee, @RequestParam Long departmentId, Model model) {
         try {
             employeeService.addOrUpdate(employee, departmentId);
@@ -78,6 +78,8 @@ public class EmployeeController extends HttpServlet {
         } catch (IdException e) {
             model.addAttribute("message", e.getMessage());
             return "ErrorPage";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "redirect:/departmentEmployees/" + departmentId;
     }

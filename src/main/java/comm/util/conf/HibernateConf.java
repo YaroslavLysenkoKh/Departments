@@ -24,15 +24,14 @@ public class HibernateConf {
     @Autowired
     private Environment environment;
 
-    @Bean
+    @Bean(name = "sessionFactory")
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBuilder sessionFactory = new LocalSessionFactoryBuilder(dataSource());
-        sessionFactory.scanPackages(new String[]{"comm/entity"});
+        sessionFactory.scanPackages(new String[]{"comm"});
         sessionFactory.setProperty(AvailableSettings.DIALECT, environment.getRequiredProperty("hibernate.dialect"));
         sessionFactory.setProperty(AvailableSettings.SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
         sessionFactory.setProperty(AvailableSettings.FORMAT_SQL, environment.getRequiredProperty("hibernate.format_sql"));
         sessionFactory.setProperty(AvailableSettings.HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        sessionFactory.setProperty(AvailableSettings.AUTO_CLOSE_SESSION, environment.getRequiredProperty("hibernate.transaction.auto_close_session"));
         return sessionFactory.buildSessionFactory();
     }
 

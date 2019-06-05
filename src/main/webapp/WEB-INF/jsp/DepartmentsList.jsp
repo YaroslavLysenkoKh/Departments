@@ -12,7 +12,7 @@
 <body>
 <div class="container ">
     <p>
-        <a href="depForm" class="btn btn-primary" role="button">Add Department</a>
+        <a href="department" class="btn btn-primary" role="button">Add Department</a>
     </p>
     <table class="table text-center" border="1">
         <thead class="thead-dark">
@@ -29,15 +29,15 @@
                     <tr>
                         <td><c:out value="${department.name}"></c:out></td>
                         <td>
-                            <a href="departmentEmployees/<c:out value="${department.id}"/>"
+                            <a href="employee/<c:out value="${department.id}"/>"
                                class="btn btn-success" role="button">Employee List</a>
                         </td>
                         <td>
-                            <a href="getToEditDepartment/<c:out value="${department.id}"/>"
+                            <a href="department/<c:out value="${department.id}"/>"
                                class="btn btn-warning" role="button">Edit</a>
                         </td>
                         <td>
-                            <form method="post" action="/deleteDepartment">
+                            <form method="post" action="/department/delete">
                                 <input type="hidden" name="departmentId" value="<c:out value="${department.id}" />">
                                 <input type="submit" value="Delete" class="btn btn-danger"
                                        onclick="return isSatisfied(${fn:length(department.employeeList)}, this.form)"/>

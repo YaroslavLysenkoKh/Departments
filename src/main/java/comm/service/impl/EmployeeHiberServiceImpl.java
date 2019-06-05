@@ -9,7 +9,6 @@ import comm.service.departments.DepartmentService;
 import comm.service.employee.EmployeeService;
 import comm.util.oval.CustomValidator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,8 +65,8 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-    public void addOrUpdate(Employee employee, Long departmentId) throws ValidationException, IdException {
+    @Transactional
+    public void addOrUpdate(Employee employee, Long departmentId) throws IdException, ValidationException {
         if (departmentId == null) {
             throw new IdException();
         }

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="/addEmployee" method="post">
+    <form action="/employee/add" method="post">
         <div class=" form-addEmployee">
             <input type="hidden" name="id"
                    value="<c:out value="${param['employeeId'] eq null ? employee.id : param['employeeId']}"/>" readonly>

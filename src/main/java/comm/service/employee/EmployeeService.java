@@ -18,6 +18,6 @@ public interface EmployeeService {
 
     Employee getEmployeeByEmail(String email);
 
-    void addOrUpdate(Employee employee, Long departmentId) throws ValidationException, IdException;
+    void addOrUpdate(Employee employee, Long departmentId) throws IdException, ValidationException;
 
 }

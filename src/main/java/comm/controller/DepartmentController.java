@@ -25,7 +25,7 @@ public class DepartmentController extends HttpServlet {
         return new ModelAndView("DepartmentsList", "departments", departmentService.getAll());
     }
 
-    @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "/department/delete", method = RequestMethod.POST)
     public String delete(@RequestParam Long departmentId, Model model) {
         try {
             departmentService.deleteById(departmentId);
@@ -36,7 +36,7 @@ public class DepartmentController extends HttpServlet {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "/department/add", method = RequestMethod.POST)
     public String addOrUpdate(@ModelAttribute("department") Department department, Model model) {
         try {
             departmentService.addOrUpdate(department);
@@ -44,11 +44,13 @@ public class DepartmentController extends HttpServlet {
             model.addAttribute("validationErrors", e);
             model.addAttribute("department", new Department());
             return "EditDepartment";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/getToEditDepartment/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/department/{departmentId}", method = RequestMethod.GET)
     public String getToEdit(@PathVariable Long departmentId, Model model) {
         try {
             model.addAttribute("department", departmentService.getById(departmentId));
@@ -59,7 +61,7 @@ public class DepartmentController extends HttpServlet {
         return "EditDepartment";
     }
 
-    @RequestMapping("/depForm")
+    @RequestMapping("/department")
     public ModelAndView showForm() {
         return new ModelAndView("EditDepartment", "department", new Department());
     }

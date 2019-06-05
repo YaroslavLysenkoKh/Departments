@@ -7,6 +7,7 @@ import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.util.oval.CustomValidator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,13 +24,13 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Department> getAll() {
         return departmentGenericDao.getAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Department getById(Long id) throws IdException {
         if (id == null) {
             throw new IdException();
@@ -38,7 +39,7 @@ public class DepartmentHiberSerivceImpl implements DepartmentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Department getByName(String name) {
         return departmentGenericDao.getByName(name);
     }
