@@ -5,7 +5,7 @@ import net.sf.oval.constraint.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -30,7 +30,7 @@ public class Employee {
     @Length()
     @Column(name = "salary")
     private BigDecimal salary;
-    @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy")
+    @DateRange(max = "today", message = "cannot be after today date", format = "dd-MM-yyyy", min = "1730-01-01")
     @NotNull(message = "cannot be empty")
     @NotEmpty(message = "cannot be empty")
     @Column(name = "birth_date")

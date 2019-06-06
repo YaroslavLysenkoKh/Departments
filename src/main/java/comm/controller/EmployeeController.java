@@ -5,17 +5,16 @@ import comm.exception.IdException;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import comm.service.employee.EmployeeService;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
-import java.sql.Date;
+import java.beans.PropertyEditorSupport;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class EmployeeController extends HttpServlet {
@@ -28,13 +27,19 @@ public class EmployeeController extends HttpServlet {
         this.departmentService = departmentService;
     }
 
-//    @InitBinder
-//    public void customBinding(WebDataBinder binder) {
-//        // tell spring to set empty values as null instead of empty string.
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        dateFormat.setLenient(false);
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-//    }
+    @InitBinder
+    private void dataBinding(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                try {
+                    setValue(new SimpleDateFormat("yyyy-MM-dd").parse(text));
+                } catch (ParseException e) {
+                    setValue(null);
+                }
+            }
+        });
+    }
 
     @RequestMapping(value = "/employee/{departmentId}", method = RequestMethod.GET)
     public String getEmployees(@PathVariable Long departmentId, Model model) {
@@ -44,9 +49,9 @@ public class EmployeeController extends HttpServlet {
     }
 
     @RequestMapping(value = "/employee/delete", method = RequestMethod.POST)
-    public String deleteEmployee(@RequestParam Long employeeId, @RequestParam String departmentId, Model model) {
+    public String deleteEmployee(@RequestParam Long employeeId, @RequestParam Long departmentId, Model model) {
         try {
-            employeeService.deleteById(employeeId);
+            employeeService.deleteById(employeeId, departmentId);
         } catch (IdException e) {
             model.addAttribute("message", e.getMessage());
             return "ErrorPage";
@@ -55,7 +60,7 @@ public class EmployeeController extends HttpServlet {
     }
 
     @RequestMapping(value = "/employee/form/{departmentId}", method = RequestMethod.GET)
-    public String showForm(@PathVariable String departmentId, Model model) {
+    public String showForm(@PathVariable Long departmentId, Model model) {
         model.addAttribute("departmentId", departmentId);
         model.addAttribute("employee", new Employee());
         return "EditEmployee";

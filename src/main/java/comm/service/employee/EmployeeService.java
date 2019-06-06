@@ -10,7 +10,7 @@ public interface EmployeeService {
 
     Employee getById(Long id);
 
-    void deleteById(Long id) throws IdException;
+    void deleteById(Long id, Long departmentId) throws IdException;
 
     List<Employee> getAllByDepartmentId(Long id);
 

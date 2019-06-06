@@ -1,9 +1,11 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+
     <link rel='stylesheet' href='${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='webjars/momentjs/2.24.0/moment.js'>
     <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -25,7 +27,6 @@
         <th scope="col">Birth Date</th>
         <th class="text-center" colspan=2>Action</th>
         </thead>
-
         <tbody>
         <c:choose>
             <c:when test="${empty employees}">
@@ -33,11 +34,13 @@
             </c:when>
             <c:otherwise>
                 <c:forEach items="${employees}" var="employee">
+
                     <tr>
                         <td>${employee.email}</td>
                         <td>${employee.salary}</td>
-                        <td>${employee.birthDate}</td>
-                        </td>
+
+                        <td><fmt:formatDate pattern="dd/MM/yyyy"
+                                            value="${employee.birthDate}"/></td>
                         <td>
                             <a href="edit/<c:out value="${employee.id}"/>"
                                class="btn btn-success" role="button">Edit</a>

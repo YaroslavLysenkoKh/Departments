@@ -58,9 +58,4 @@ public class DepartmentController extends HttpServlet {
     public ModelAndView showForm() {
         return new ModelAndView("EditDepartment", "department", new Department());
     }
-
-//    @RequestMapping("/checkEmployee")
-//    public String doCheck(String id) {
-//        return "";
-//    }
 }

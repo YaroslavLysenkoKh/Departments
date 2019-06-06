@@ -39,8 +39,8 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) throws IdException {
-        if (id == null) {
+    public void deleteById(Long id, Long departmentId) throws IdException {
+        if (id == null || departmentId == null) {
             throw new IdException();
         }
         Employee employee = getById(id);
@@ -51,7 +51,7 @@ public class EmployeeHiberServiceImpl implements EmployeeService {
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Employee> getAllByDepartmentId(Long id) {
         if (id == null) {
-            return new ArrayList();
+            return new ArrayList<>();
         }
         return employeesDao.getAllByDepartmentId(id);
     }
