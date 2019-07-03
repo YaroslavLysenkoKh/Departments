@@ -1,15 +1,20 @@
-import DepartmentAJAX from "@/components/department/departmentAJAX";
+import $ from "jquery";
+import {URL} from "@/components/Constant";
 
 export default class DepartmentForm {
 
-    constructor() {
-        this.depAjax = new DepartmentAJAX();
+    render(departmentId) {
+        $.ajax({
+            type: 'GET',
+            url: URL + '/department/edit/' + departmentId,
+            dataType: "json",
+            success: this.renderForm
+        });
     }
 
-    render(id) {
-        if (id) {
-            let department = this.depAjax.getById(id)
-        }
+    renderForm(department) {
+        // let department = this.depAjax.getById(id)
+
         let div;
         let body = document.getElementsByTagName('body')[0];
 

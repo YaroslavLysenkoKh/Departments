@@ -8,16 +8,14 @@ export default class Route {
         window.addEventListener("hashchange", e => this.changeRoute(e));
         this.routeMap = new Map([
             ["/", new MainRender()],
-            ["department/edit/", new DepartmentForm()]
+            ["/department/edit", new DepartmentForm()]
         ]);
     }
 
     changeRoute(e) {
-        console.log(e);
         let hashLocation = window.location.hash.substring(1).split('?');
-        console.log(hashLocation[1]);
-        console.log(hashLocation[0]);
-        let route = this.routeMap.get(hashLocation[0]).render(id);
+        let id = hashLocation[1].charAt(hashLocation[1].length - 1);
+        this.routeMap.get(hashLocation[0]).render(id);
     }
 
 

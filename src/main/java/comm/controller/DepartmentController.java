@@ -4,14 +4,14 @@ import comm.entity.Department;
 import comm.exception.IdException;
 import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
+import java.util.List;
 
-@Controller
+@RestController
 public class DepartmentController extends HttpServlet {
 
     private final DepartmentService departmentService;
@@ -21,8 +21,8 @@ public class DepartmentController extends HttpServlet {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView main() {
-        return new ModelAndView("DepartmentsList", "departments", departmentService.getAll());
+    public List<Department> main() {
+        return departmentService.getAll();
     }
 
     @RequestMapping(value = "/department/delete", method = RequestMethod.POST)
@@ -49,9 +49,9 @@ public class DepartmentController extends HttpServlet {
     }
 
     @RequestMapping(value = "/department/{departmentId}", method = RequestMethod.GET)
-    public String getToEdit(@PathVariable Long departmentId, Model model) {
-        model.addAttribute("department", departmentService.getById(departmentId));
-        return "EditDepartment";
+    public Department getToEdit(@PathVariable Long departmentId, Model model) {
+//        model.addAttribute("department", departmentService.getById(departmentId));
+        return departmentService.getById(departmentId);
     }
 
     @RequestMapping("/department")

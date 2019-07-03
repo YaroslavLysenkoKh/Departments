@@ -46,7 +46,9 @@ export class MainRender {
             buttonEditEmployee.setAttribute('value', 'Edit')
             buttonEditEmployee.addEventListener('click', () => {
                 // this.depAjax.editForm(data[department].id);
-                window.location.hash = window.location.hash + "/department/edit/" + data[department].id;
+
+                window.location.hash = window.location.hash + "department/asdedit/search?id=" + data[department].id;
+                // window.location.search = window.location.hash;
             });
             cellEditDepartment.appendChild(buttonEditEmployee);
 

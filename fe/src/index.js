@@ -5,10 +5,6 @@ const myObj = [{id: "1", name: "department1"}, {id: "2", name: "department2 "}]
 
 class RenderDepartment {
 
-    constructor() {
-        this.depAjax = new DepartmentAJAX();
-        // this.route = new Route()
-    }
 
     renderTable(data) {
 
@@ -57,9 +53,7 @@ class RenderDepartment {
             buttonEditEmployee.setAttribute('type', 'button');
             buttonEditEmployee.setAttribute('value', 'Edit')
             buttonEditEmployee.addEventListener('click', () => {
-                // this.depAjax.editForm(data[department].id);
-                window.location.hash = "/department/edit/?id=" + data[department].id;
-                this.depAjax.getById(data[department].id);
+                window.location.hash = "/department/edit?id=" + data[department].id;
             });
             cellEditDepartment.appendChild(buttonEditEmployee);
 
@@ -68,8 +62,7 @@ class RenderDepartment {
             buttonDelete.setAttribute('type', 'button');
             buttonDelete.setAttribute('value', 'Delete');
             buttonDelete.addEventListener('click', () => {
-                this.depAjax.deleteDepartment(data[department].id);
-
+                // this.depAjax.deleteDepartment(data[department].id);
             });
             cellDeleteDepartment.appendChild(buttonDelete);
 

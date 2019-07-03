@@ -2,3 +2,6 @@
 .idea
 *.iml
 /target
+/fe/node_modules
+.gitignore
+
