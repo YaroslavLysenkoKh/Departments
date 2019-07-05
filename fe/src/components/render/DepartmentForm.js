@@ -1,21 +1,27 @@
 import $ from "jquery";
 import {URL} from "@/components/Constant";
+import {addOrUpdate} from "@/components/department/addOrUpdate";
 
 export default class DepartmentForm {
 
-    render(departmentId) {
-        $.ajax({
-            type: 'GET',
-            url: URL + '/department/edit/' + departmentId,
-            dataType: "json",
-            success: this.renderForm
-        });
+    doRequest(departmentId) {
+        if (departmentId) {
+            $.ajax({
+                type: 'GET',
+                url: URL + '/department/edit/' + departmentId,
+                dataType: "json",
+                success: this.renderForm
+            });
+        }
+        this.renderForm();
     }
 
     renderForm(department) {
-        // let department = this.depAjax.getById(id)
 
         let div;
+
+        document.getElementById('appDiv').innerHTML = "";
+
         let body = document.getElementsByTagName('body')[0];
 
         let form = document.createElement('form');
@@ -24,8 +30,8 @@ export default class DepartmentForm {
         let inputDepId = document.createElement('input');
         inputDepId.setAttribute('type', 'hidden');
         inputDepId.setAttribute('name', 'id');
-        if (dep !== null) {
-            inputDepId.setAttribute('value', 'dep.id');
+        if (department) {
+            inputDepId.setAttribute('value', department.id);
         }
         inputDepId.setAttribute('value', '');
         div.appendChild(inputDepId);
@@ -38,18 +44,25 @@ export default class DepartmentForm {
         inputDepName.setAttribute('type', 'text');
         inputDepName.setAttribute('name', 'name');
         inputDepName.setAttribute('placeholder', "Enter name");
-        if (dep !== null) {
+        if (department) {
             inputDepName.setAttribute('value', 'dep.name');
         }
         inputDepName.setAttribute('value', '');
         div.appendChild(inputDepName);
         form.appendChild(div);
 
+        let smallName = document.createElement('small');
+        smallName.setAttribute('id', "smallErrorName");
+        smallName.innerHTML = "";
+
         let buttonSubmit = document.createElement('button');
         buttonSubmit.setAttribute('type', 'submit');
         buttonSubmit.innerHTML = "Submit";
         buttonSubmit.addEventListener('click', () => {
-            this.depAjax.addOrUpdate($('form').serializeJSON());
+            window.location.hash = window.location.hash + "/department/addOrUpdate";
+            let id = $('id').val();
+            let name = $('name').val();
+            addOrUpdate(id, name);
         });
         form.appendChild(buttonSubmit);
 

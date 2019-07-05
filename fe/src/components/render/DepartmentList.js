@@ -1,16 +1,34 @@
-export class MainRender {
-    render() {
-        let a;
+import $ from "jquery";
+import {URL} from "@/components/Constant";
+
+export class RenderDepartments {
+
+    doRequest() {
+        $.ajax({
+            type: 'GET',
+            url: URL,
+            dataType: "json",
+            success: this.renderTable
+        });
+    }
+
+    renderTable(data) {
+        let a, appDiv;
+        appDiv = document.createElement("div");
+        appDiv.setAttribute('id', 'appDiv');
         let div = document.createElement('div');
         let p = document.createElement('p');
         p.appendChild(a = document.createElement('a'));
-        a.setAttribute('href', '#department');
+        a.setAttribute('href', '#/department/edit');
         a.setAttribute('role', 'button');
         a.innerHTML = "Add Department";
+        a.addEventListener('click', () => {
+            window.location.hash = window.location.hash;
+        });
         div.appendChild(p);
 
-        let thead, th, tbody;
-        let body = document.getElementsByTagName('body')[0];
+        let thead, th, tbody, row, td;
+
         let table = document.createElement("table");
         table.style.width = '100%';
         table.setAttribute('border', '1');
@@ -23,48 +41,45 @@ export class MainRender {
         th.setAttribute('colspan', '3');
 
         table.appendChild(tbody = document.createElement("tbody"));
-        for (let department in data) {
 
-            let row = tbody.insertRow(data.indexOf(department));
+        data.forEach((department) => {
 
-            let cellName = row.insertCell(data.indexOf(department));
-            cellName.innerHTML = data[department].name;
+            tbody.appendChild(row = document.createElement("tr"));
 
-            let cellEmployeesList = row.insertCell(data.indexOf(department));
+            row.appendChild(td = document.createElement("td"));
+            td.append(department.name);
+
+            row.appendChild(td = document.createElement("td"));
             let buttonEmployeeList = document.createElement('input');
             buttonEmployeeList.setAttribute('type', 'button');
             buttonEmployeeList.setAttribute('value', 'Employee List')
             buttonEmployeeList.addEventListener('click', () => {
-                //this.depAjax.renderEmployeeList(data[department].id);
-                window.location.hash = window.location.hash + "/employee/" + data[department].id;
+                window.location.hash = window.location.hash + "/employee?id=" + department.id;
             });
-            cellEmployeesList.appendChild(buttonEmployeeList);
+            td.append(buttonEmployeeList);
 
-            let cellEditDepartment = row.insertCell(data.indexOf(department));
+            row.appendChild(td = document.createElement("td"));
             let buttonEditEmployee = document.createElement('input');
             buttonEditEmployee.setAttribute('type', 'button');
             buttonEditEmployee.setAttribute('value', 'Edit')
             buttonEditEmployee.addEventListener('click', () => {
-                // this.depAjax.editForm(data[department].id);
-
-                window.location.hash = window.location.hash + "department/asdedit/search?id=" + data[department].id;
-                // window.location.search = window.location.hash;
+                window.location.hash = "/department/edit?id=" + department.id;
             });
-            cellEditDepartment.appendChild(buttonEditEmployee);
+            td.appendChild(buttonEditEmployee);
 
-            let cellDeleteDepartment = row.insertCell(data.indexOf((department)));
+            row.appendChild(td = document.createElement("td"));
             let buttonDelete = document.createElement('input');
             buttonDelete.setAttribute('type', 'button');
             buttonDelete.setAttribute('value', 'Delete');
             buttonDelete.addEventListener('click', () => {
                 // this.depAjax.deleteDepartment(data[department].id);
-                window.location.hash = window.location.hash + "/department/delete/?id=" + data[department].id;
             });
-            cellDeleteDepartment.appendChild(buttonDelete);
+            td.appendChild(buttonDelete);
 
-            tbody.appendChild(row);
-        }
-        body.appendChild(div);
-        body.appendChild(table);
+        });
+        let body = document.getElementsByTagName('body')[0];
+        appDiv.appendChild(div);
+        appDiv.appendChild(table);
+        body.append(appDiv);
     }
 }

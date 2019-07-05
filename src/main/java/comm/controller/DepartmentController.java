@@ -6,7 +6,6 @@ import comm.exception.ValidationException;
 import comm.service.departments.DepartmentService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
 import java.util.List;
@@ -25,7 +24,7 @@ public class DepartmentController extends HttpServlet {
         return departmentService.getAll();
     }
 
-    @RequestMapping(value = "/department/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/department/delete", method = RequestMethod.DELETE)
     public String delete(@RequestParam Long departmentId, Model model) {
         try {
             departmentService.deleteById(departmentId);
@@ -42,20 +41,13 @@ public class DepartmentController extends HttpServlet {
             departmentService.addOrUpdate(department);
         } catch (ValidationException e) {
             model.addAttribute("validationErrors", e);
-            model.addAttribute("department", new Department());
             return "EditDepartment";
         }
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/department/{departmentId}", method = RequestMethod.GET)
-    public Department getToEdit(@PathVariable Long departmentId, Model model) {
-//        model.addAttribute("department", departmentService.getById(departmentId));
+    @RequestMapping(value = "/department/edit/{departmentId}", method = RequestMethod.GET)
+    public Department getToEdit(@PathVariable Long departmentId) {
         return departmentService.getById(departmentId);
-    }
-
-    @RequestMapping("/department")
-    public ModelAndView showForm() {
-        return new ModelAndView("EditDepartment", "department", new Department());
     }
 }
