@@ -59,13 +59,13 @@ export class RenderDepartments {
             td.append(buttonEmployeeList);
 
             row.appendChild(td = document.createElement("td"));
-            let buttonEditEmployee = document.createElement('input');
-            buttonEditEmployee.setAttribute('type', 'button');
-            buttonEditEmployee.setAttribute('value', 'Edit')
-            buttonEditEmployee.addEventListener('click', () => {
+            let buttonEditDepartment = document.createElement('input');
+            buttonEditDepartment.setAttribute('type', 'button');
+            buttonEditDepartment.setAttribute('value', 'Edit')
+            buttonEditDepartment.addEventListener('click', () => {
                 window.location.hash = "/department/edit?id=" + department.id;
             });
-            td.appendChild(buttonEditEmployee);
+            td.appendChild(buttonEditDepartment);
 
             row.appendChild(td = document.createElement("td"));
             let buttonDelete = document.createElement('input');
